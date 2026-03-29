@@ -1,0 +1,1429 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>時刻の啓示｜運命の羅針盤 — ガイアコード鑑定</title>
+<style>
+:root {
+  --bg: #0a0a1a;
+  --card: #12122a;
+  --border: #2a2a4a;
+  --accent: #8b7ed8;
+  --accent2: #d4a574;
+  --text: #e8e6f0;
+  --muted: #8888aa;
+  --wood: #4caf50;
+  --fire: #f44336;
+  --earth: #ff9800;
+  --metal: #ffd700;
+  --water: #2196f3;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", "Noto Sans JP", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  line-height: 1.7;
+}
+.container { max-width: 800px; margin: 0 auto; padding: 20px; }
+
+/* Header */
+.header {
+  text-align: center;
+  padding: 40px 0 30px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 30px;
+}
+.header h1 {
+  font-size: 1.8rem;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 8px;
+}
+.header .sub { color: var(--muted); font-size: 0.9rem; }
+
+/* Input Form */
+.input-section {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 24px;
+}
+.input-section h2 {
+  font-size: 1.1rem;
+  margin-bottom: 16px;
+  color: var(--accent);
+}
+.form-row {
+  display: flex;
+  gap: 12px;
+  align-items: end;
+  flex-wrap: wrap;
+}
+.form-group { display: flex; flex-direction: column; }
+.form-group label { font-size: 0.8rem; color: var(--muted); margin-bottom: 4px; }
+.form-group select, .form-group input {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 1rem;
+  min-width: 80px;
+}
+.form-group select:focus, .form-group input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+.btn {
+  background: linear-gradient(135deg, var(--accent), #6c63ff);
+  color: #fff;
+  border: none;
+  padding: 10px 28px;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: opacity .2s;
+  white-space: nowrap;
+}
+.btn:hover { opacity: 0.85; }
+.error-msg { color: #f44; font-size: 0.95rem; margin-top: 12px; display:none; font-weight: bold; }
+
+/* Results */
+#results { display: none; }
+
+.result-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 20px;
+}
+.result-card h3 {
+  font-size: 1rem;
+  color: var(--accent2);
+  margin-bottom: 14px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+/* Profile */
+.profile-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+}
+.profile-item {
+  background: var(--bg);
+  border-radius: 8px;
+  padding: 14px;
+  text-align: center;
+}
+.profile-item .label { font-size: 0.75rem; color: var(--muted); }
+.profile-item .value { font-size: 1.3rem; font-weight: bold; margin-top: 4px; }
+
+/* Star Chart */
+.star-chart {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+  max-width: 340px;
+  margin: 0 auto;
+}
+.star-cell {
+  background: var(--bg);
+  border-radius: 8px;
+  padding: 12px 8px;
+  text-align: center;
+  position: relative;
+}
+.star-cell .dir { font-size: 0.65rem; color: var(--muted); }
+.star-cell .star-name { font-size: 0.95rem; font-weight: bold; margin: 4px 0; }
+.star-cell .star-num { font-size: 0.75rem; color: var(--muted); }
+.star-cell.center { border: 2px solid var(--accent); }
+.star-cell.highlight { border: 2px solid var(--accent2); }
+.star-cell.danger { border: 2px solid #f44; }
+
+/* Biorhythm */
+.bio-display {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.bio-phase {
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+.bio-phase.rising { color: var(--wood); }
+.bio-phase.peak { color: var(--fire); }
+.bio-phase.transition { color: var(--earth); }
+.bio-phase.declining { color: var(--water); }
+.bio-desc { color: var(--muted); font-size: 0.9rem; }
+
+/* Direction warnings */
+.dir-list { list-style: none; }
+.dir-list li {
+  padding: 10px 14px;
+  background: var(--bg);
+  border-radius: 8px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.dir-list .icon { font-size: 1.2rem; }
+.dir-warn { color: #f44; }
+.dir-caution { color: #ff9800; }
+
+/* Five Elements */
+.element-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 16px;
+  font-size: 0.85rem;
+  font-weight: bold;
+}
+.el-wood { background: rgba(76,175,80,.2); color: var(--wood); }
+.el-fire { background: rgba(244,67,54,.2); color: var(--fire); }
+.el-earth { background: rgba(255,152,0,.2); color: var(--earth); }
+.el-metal { background: rgba(255,215,0,.2); color: var(--metal); }
+.el-water { background: rgba(33,150,243,.2); color: var(--water); }
+
+.relation-box {
+  background: var(--bg);
+  border-radius: 8px;
+  padding: 16px;
+  margin-top: 12px;
+}
+.relation-box .rel-type { font-size: 1.1rem; font-weight: bold; }
+.relation-box .rel-desc { color: var(--muted); margin-top: 4px; }
+
+/* Advice */
+.advice-section { margin-bottom: 16px; }
+.advice-section h4 {
+  font-size: 0.95rem;
+  margin-bottom: 8px;
+  padding: 6px 12px;
+  border-radius: 6px;
+}
+.advice-do h4 { background: rgba(76,175,80,.15); color: var(--wood); }
+.advice-avoid h4 { background: rgba(244,67,54,.15); color: var(--fire); }
+.advice-caution h4 { background: rgba(255,152,0,.15); color: var(--earth); }
+.advice-section ul {
+  list-style: disc;
+  padding-left: 24px;
+}
+.advice-section li {
+  margin-bottom: 6px;
+  font-size: 0.9rem;
+}
+
+/* Question Cards */
+.question-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.question-card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 18px 20px;
+  cursor: pointer;
+  transition: border-color .2s, background .2s;
+  text-align: left;
+}
+.question-card:hover {
+  border-color: var(--accent);
+  background: rgba(139,126,216,.06);
+}
+.question-card.selected {
+  border-color: var(--accent2);
+  background: rgba(212,165,116,.08);
+}
+.question-card .q-label {
+  font-size: 0.75rem;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+.question-card .q-text {
+  font-size: 1rem;
+  line-height: 1.6;
+}
+/* Chat UI */
+#chatSection { display: none; }
+.chat-setup {
+  display: flex;
+  gap: 8px;
+  align-items: end;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+.chat-setup .form-group { flex: 1; min-width: 200px; }
+.chat-messages {
+  max-height: 400px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 16px;
+  padding: 4px;
+}
+.chat-msg {
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-size: 0.92rem;
+  line-height: 1.7;
+  max-width: 85%;
+  white-space: pre-wrap;
+}
+.chat-msg.user {
+  background: rgba(139,126,216,.15);
+  align-self: flex-end;
+  border-bottom-right-radius: 4px;
+}
+.chat-msg.assistant {
+  background: var(--bg);
+  align-self: flex-start;
+  border-bottom-left-radius: 4px;
+}
+.chat-input-row {
+  display: flex;
+  gap: 8px;
+}
+.chat-input-row textarea {
+  flex: 1;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  resize: vertical;
+  min-height: 44px;
+  max-height: 120px;
+}
+.chat-input-row textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+.chat-input-row button {
+  white-space: nowrap;
+}
+.chat-loading {
+  color: var(--muted);
+  font-size: 0.85rem;
+  padding: 8px 0;
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  padding: 30px 0;
+  color: var(--muted);
+  font-size: 0.8rem;
+  border-top: 1px solid var(--border);
+  margin-top: 20px;
+}
+
+@media (max-width: 500px) {
+  .header h1 { font-size: 1.3rem; }
+  .form-row { flex-direction: column; }
+  .form-group select, .form-group input { width: 100%; }
+  .btn { width: 100%; }
+  .profile-grid { grid-template-columns: repeat(2, 1fr); }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="header">
+  <h1>時刻の啓示｜運命の羅針盤</h1>
+  <div class="sub">ガイアコード鑑定ツール — 2026年版</div>
+</div>
+
+<div class="input-section">
+  <h2>生年月日を入力</h2>
+  <div class="form-row">
+    <div class="form-group">
+      <label>年（西暦）</label>
+      <select id="birthYear"></select>
+    </div>
+    <div class="form-group">
+      <label>月</label>
+      <select id="birthMonth"></select>
+    </div>
+    <div class="form-group">
+      <label>日</label>
+      <select id="birthDay"></select>
+    </div>
+    <button class="btn" onclick="doFortune()">鑑定する</button>
+  </div>
+  <div class="error-msg" id="errorMsg"></div>
+</div>
+
+<div id="results">
+
+  <!-- Profile -->
+  <div class="result-card">
+    <h3>あなたの命盤</h3>
+    <div class="profile-grid">
+      <div class="profile-item">
+        <div class="label">本命星（九性）</div>
+        <div class="value" id="rKyusei"></div>
+      </div>
+      <div class="profile-item">
+        <div class="label">十干</div>
+        <div class="value" id="rStem"></div>
+      </div>
+      <div class="profile-item">
+        <div class="label">十二支</div>
+        <div class="value" id="rBranch"></div>
+      </div>
+      <div class="profile-item">
+        <div class="label">五行</div>
+        <div class="value" id="rElement"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Star Chart -->
+  <div class="result-card">
+    <h3>2026年 年盤（一白水性中宮）</h3>
+    <div class="star-chart" id="starChart"></div>
+    <div style="margin-top:12px; text-align:center;">
+      <span style="color:var(--accent);font-size:.8rem;">■</span><span style="font-size:.8rem;color:var(--muted);"> あなたの位置</span>
+      <span style="color:#f44;font-size:.8rem;margin-left:12px;">■</span><span style="font-size:.8rem;color:var(--muted);"> 五黄殺</span>
+    </div>
+  </div>
+
+  <!-- Biorhythm -->
+  <div class="result-card">
+    <h3>2026年のバイオリズム</h3>
+    <div class="bio-display">
+      <div class="bio-phase" id="rBioPhase"></div>
+      <div class="bio-desc" id="rBioDesc"></div>
+    </div>
+    <div id="rBioDetail" style="margin-top:14px;font-size:.9rem;"></div>
+  </div>
+
+  <!-- Directions -->
+  <div class="result-card">
+    <h3>2026年の方位情報</h3>
+    <ul class="dir-list" id="rDirections"></ul>
+  </div>
+
+  <!-- Five Elements -->
+  <div class="result-card">
+    <h3>五行関係（あなた × 2026年）</h3>
+    <div id="rElementRelation"></div>
+  </div>
+
+  <!-- Advice -->
+  <div class="result-card">
+    <h3>2026年の鑑定アドバイス</h3>
+    <div id="rAdvice"></div>
+  </div>
+
+  <!-- PDF Save Button -->
+  <div style="text-align:center;margin-bottom:24px;">
+    <button class="btn" onclick="savePDF()" style="background:linear-gradient(135deg,#d4a574,#8b7ed8);padding:12px 36px;font-size:1.05rem;">鑑定結果をPDFに保存</button>
+  </div>
+
+  <!-- AI Chat Section -->
+  <div class="result-card" id="chatSection">
+    <h3>占い師に相談する（AI対話）</h3>
+    <p style="color:var(--muted);font-size:.85rem;margin-bottom:12px;">あなたの鑑定結果をもとに、AIが占い師として相談に回答します。<br>下の候補から選ぶか、自由に相談内容を入力してください。</p>
+    <div class="chat-setup">
+      <div class="form-group">
+        <label>Anthropic APIキー <span class="api-help-toggle" onclick="toggleApiHelp()" style="color:var(--accent);cursor:pointer;font-size:.8rem;margin-left:8px;">▶ 取得方法</span></label>
+        <input type="password" id="chatApiKey" placeholder="sk-ant-..." style="width:100%;">
+        <div id="apiHelp" style="display:none;margin-top:10px;padding:14px;background:var(--bg);border-radius:8px;font-size:.85rem;line-height:1.7;color:var(--muted);">
+          <strong style="color:var(--text);">Claude APIキーの取得手順</strong>
+          <ol style="margin:8px 0 0 18px;padding:0;">
+            <li>「Claude API」で検索し、<a href="https://console.anthropic.com/" target="_blank" rel="noopener" style="color:var(--accent);">Anthropic Developer Console</a> にアクセス</li>
+            <li>ログイン後、左メニューの「API Keys」をクリック</li>
+            <li>「Create Key」でAPIキーを作成</li>
+            <li>作成時に表示されるキー（<code>sk-ant-...</code>）をコピー（※後から再表示できないので控えてください）</li>
+            <li>上の入力欄に貼り付けて保存完了（次回以降は自動で読み込まれます）</li>
+          </ol>
+          <p style="margin-top:8px;font-size:.8rem;">※ 初回は最低5ドル分のクレジット購入が必要です。</p>
+        </div>
+      </div>
+    </div>
+    <div class="question-cards" id="quickQuestions">
+      <div class="question-card" onclick="sendQuickQuestion(this, '今、私がいちばん立ち止まって考えるべきことは何でしょうか？私の運勢を踏まえて教えてください。')">
+        <div class="q-text">今、あなたがいちばん立ち止まって考えたい問いは何ですか？</div>
+      </div>
+      <div class="question-card" onclick="sendQuickQuestion(this, '最近、心の中で引っかかっていることがあります。私の九星や運気の流れから、どう向き合えばいいか教えてください。')">
+        <div class="q-text">最近、心の中で引っかかっていることは何でしょうか？</div>
+      </div>
+      <div class="question-card" onclick="sendQuickQuestion(this, '答えを急がずに見つめ直したいテーマがあります。私の今の運気と本命星を踏まえて、どんなテーマに向き合うべきかアドバイスをください。')">
+        <div class="q-text">答えを急がずに見つめ直したいテーマはありますか？</div>
+      </div>
+    </div>
+    <div class="chat-messages" id="chatMessages"></div>
+    <div class="chat-input-row">
+      <textarea id="chatInput" placeholder="相談内容を入力してください..." rows="2"></textarea>
+      <button class="btn" onclick="sendChat()" id="chatSendBtn">送信</button>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  時刻の啓示｜運命の羅針盤 — 九星気学ベースの確定的計算エンジン
+</div>
+
+</div>
+
+<script>
+// ============================================================
+// DATA TABLES
+// ============================================================
+
+const KYUSEI_NAMES = [
+  '', '一白水性', '二黒土性', '三碧木性', '四緑木性',
+  '五黄土性', '六白金性', '七赤金性', '八白土性', '九紫火性'
+];
+
+const KYUSEI_ELEMENTS = [
+  '', '水', '土', '木', '木', '土', '金', '金', '土', '火'
+];
+
+const KYUSEI_SYMBOLS = [
+  '', '海・水', '田・大地', '雷', '花・風',
+  '大吉・中心', '天', '澤', '山', '光・火'
+];
+
+const STEMS = ['甲','乙','丙','丁','戊','己','庚','辛','壬','癸'];
+const STEM_READINGS = ['きのえ','きのと','ひのえ','ひのと','つちのえ','つちのと','かのえ','かのと','みずのえ','みずのと'];
+const STEM_ELEMENTS = ['木','木','火','火','土','土','金','金','水','水'];
+
+const BRANCHES = ['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'];
+const BRANCH_READINGS = ['ね','うし','とら','う','たつ','み','うま','ひつじ','さる','とり','いぬ','い'];
+const BRANCH_ELEMENTS = ['水','土','木','木','土','火','火','土','金','金','土','水'];
+
+// 方位: 後天定位盤の各宮に対応する方位名
+const DIRECTIONS = ['', '北', '南西', '東', '南東', '中宮', '北西', '西', '北東', '南'];
+// 飛泊順: 中宮→NW→W→NE→S→N→SW→E→SE (1→6→7→8→9→1→2→3→4 in 後天定位)
+// Position index in 3x3 grid: SE=0,S=1,SW=2,E=3,C=4,W=5,NE=6,N=7,NW=8
+// 後天定位盤: SE=4,S=9,SW=2, E=3,C=5,W=7, NE=8,N=1,NW=6
+const KOUTEN_POSITIONS = [4, 9, 2, 3, 5, 7, 8, 1, 6]; // grid position → default star
+
+// 飛泊順序 (magic square path from center)
+// Standard Luo Shu flying star sequence: 5→6→7→8→9→1→2→3→4
+const FLY_ORDER = [
+  4, // center (index in grid)
+  8, // NW
+  5, // W
+  6, // NE
+  1, // S
+  7, // N
+  2, // SW
+  3, // E
+  0  // SE
+];
+
+// Grid labels
+const GRID_DIRS = ['巽(SE)', '離(S)', '坤(SW)', '震(E)', '中宮', '兌(W)', '艮(NE)', '坎(N)', '乾(NW)'];
+const GRID_COMPASS = ['南東', '南', '南西', '東', '中宮', '西', '北東', '北', '北西'];
+
+// 十二支 → 方位 (opposite for 歳破)
+const BRANCH_DIRECTIONS = ['北','北北東','東北東','東','東南東','南南東','南','南南西','西南西','西','西北西','北北西'];
+const BRANCH_OPPOSITES =  ['南','南南西','西南西','西','西北西','北北西','北','北北東','東北東','東','東南東','南南東'];
+
+// 節分テーブル (デフォルトは2月3日。特殊な年のみ上書き)
+// 2月4日の年と2月2日の年を明示。それ以外はすべて2月3日。
+const SETSUBUN_FEB4 = new Set([1919,1920,1923,1924,1927,1928,1931,1932,1935,1936,1939,1940,1943,1944,1947,1948,1951,1952,1956,1960,1964,1968,1972,1976,1980,1984]);
+const SETSUBUN_FEB2 = new Set([2021,2025]);
+
+// 早見表（hayami-table.json の正式データ）— 計算ではなくこのテーブルを直接参照する
+const HAYAMI_TABLE = {
+  1919:{h:"九紫火性",k:9,j:"己",s:"未",sd:"1919-02-04"},
+  1920:{h:"八白土性",k:8,j:"庚",s:"申",sd:"1920-02-05"},
+  1921:{h:"七赤金性",k:7,j:"辛",s:"酉",sd:"1921-02-04"},
+  1922:{h:"六白金性",k:6,j:"壬",s:"戌",sd:"1922-02-04"},
+  1923:{h:"五黄土性",k:5,j:"癸",s:"亥",sd:"1923-02-04"},
+  1924:{h:"四緑木性",k:4,j:"甲",s:"子",sd:"1924-02-05"},
+  1925:{h:"三碧木性",k:3,j:"乙",s:"丑",sd:"1925-02-04"},
+  1926:{h:"二黒土性",k:2,j:"丙",s:"寅",sd:"1926-02-04"},
+  1927:{h:"一白水性",k:1,j:"丁",s:"卯",sd:"1927-02-04"},
+  1928:{h:"九紫火性",k:9,j:"戊",s:"辰",sd:"1928-02-05"},
+  1929:{h:"八白土性",k:8,j:"己",s:"巳",sd:"1929-02-04"},
+  1930:{h:"七赤金性",k:7,j:"庚",s:"午",sd:"1930-02-04"},
+  1931:{h:"六白金性",k:6,j:"辛",s:"未",sd:"1931-02-04"},
+  1932:{h:"五黄土性",k:5,j:"壬",s:"申",sd:"1932-02-05"},
+  1933:{h:"四緑木性",k:4,j:"癸",s:"酉",sd:"1933-02-04"},
+  1934:{h:"三碧木性",k:3,j:"甲",s:"戌",sd:"1934-02-04"},
+  1935:{h:"二黒土性",k:2,j:"乙",s:"亥",sd:"1935-02-04"},
+  1936:{h:"一白水性",k:1,j:"丙",s:"子",sd:"1936-02-05"},
+  1937:{h:"九紫火性",k:9,j:"丁",s:"丑",sd:"1937-02-04"},
+  1938:{h:"八白土性",k:8,j:"戊",s:"寅",sd:"1938-02-04"},
+  1939:{h:"七赤金性",k:7,j:"己",s:"卯",sd:"1939-02-04"},
+  1940:{h:"六白金性",k:6,j:"庚",s:"辰",sd:"1940-02-05"},
+  1941:{h:"五黄土性",k:5,j:"辛",s:"巳",sd:"1941-02-04"},
+  1942:{h:"四緑木性",k:4,j:"壬",s:"午",sd:"1942-02-04"},
+  1943:{h:"三碧木性",k:3,j:"癸",s:"未",sd:"1943-02-04"},
+  1944:{h:"二黒土性",k:2,j:"甲",s:"申",sd:"1944-02-05"},
+  1945:{h:"一白水性",k:1,j:"乙",s:"酉",sd:"1945-02-04"},
+  1946:{h:"九紫火性",k:9,j:"丙",s:"戌",sd:"1946-02-04"},
+  1947:{h:"八白土性",k:8,j:"丁",s:"亥",sd:"1947-02-04"},
+  1948:{h:"七赤金性",k:7,j:"戊",s:"子",sd:"1948-02-05"},
+  1949:{h:"六白金性",k:6,j:"己",s:"丑",sd:"1949-02-04"},
+  1950:{h:"五黄土性",k:5,j:"庚",s:"寅",sd:"1950-02-04"},
+  1951:{h:"四緑木性",k:4,j:"辛",s:"卯",sd:"1951-02-04"},
+  1952:{h:"三碧木性",k:3,j:"壬",s:"辰",sd:"1952-02-05"},
+  1953:{h:"二黒土性",k:2,j:"癸",s:"巳",sd:"1953-02-04"},
+  1954:{h:"一白水性",k:1,j:"甲",s:"午",sd:"1954-02-04"},
+  1955:{h:"九紫火性",k:9,j:"乙",s:"未",sd:"1955-02-04"},
+  1956:{h:"八白土性",k:8,j:"丙",s:"申",sd:"1956-02-05"},
+  1957:{h:"七赤金性",k:7,j:"丁",s:"酉",sd:"1957-02-04"},
+  1958:{h:"六白金性",k:6,j:"戊",s:"戌",sd:"1958-02-04"},
+  1959:{h:"五黄土性",k:5,j:"己",s:"亥",sd:"1959-02-04"},
+  1960:{h:"四緑木性",k:4,j:"庚",s:"子",sd:"1960-02-05"},
+  1961:{h:"三碧木性",k:3,j:"辛",s:"丑",sd:"1961-02-04"},
+  1962:{h:"二黒土性",k:2,j:"壬",s:"寅",sd:"1962-02-04"},
+  1963:{h:"一白水性",k:1,j:"癸",s:"卯",sd:"1963-02-04"},
+  1964:{h:"九紫火性",k:9,j:"甲",s:"辰",sd:"1964-02-05"},
+  1965:{h:"八白土性",k:8,j:"乙",s:"巳",sd:"1965-02-04"},
+  1966:{h:"七赤金性",k:7,j:"丙",s:"午",sd:"1966-02-04"},
+  1967:{h:"六白金性",k:6,j:"丁",s:"未",sd:"1967-02-04"},
+  1968:{h:"五黄土性",k:5,j:"戊",s:"申",sd:"1968-02-05"},
+  1969:{h:"四緑木性",k:4,j:"己",s:"酉",sd:"1969-02-04"},
+  1970:{h:"三碧木性",k:3,j:"庚",s:"戌",sd:"1970-02-04"},
+  1971:{h:"二黒土性",k:2,j:"辛",s:"亥",sd:"1971-02-04"},
+  1972:{h:"一白水性",k:1,j:"壬",s:"子",sd:"1972-02-05"},
+  1973:{h:"九紫火性",k:9,j:"癸",s:"丑",sd:"1973-02-04"},
+  1974:{h:"八白土性",k:8,j:"甲",s:"寅",sd:"1974-02-04"},
+  1975:{h:"七赤金性",k:7,j:"乙",s:"卯",sd:"1975-02-04"},
+  1976:{h:"六白金性",k:6,j:"丙",s:"辰",sd:"1976-02-05"},
+  1977:{h:"五黄土性",k:5,j:"丁",s:"巳",sd:"1977-02-04"},
+  1978:{h:"四緑木性",k:4,j:"戊",s:"午",sd:"1978-02-04"},
+  1979:{h:"三碧木性",k:3,j:"己",s:"未",sd:"1979-02-04"},
+  1980:{h:"二黒土性",k:2,j:"庚",s:"申",sd:"1980-02-05"},
+  1981:{h:"一白水性",k:1,j:"辛",s:"酉",sd:"1981-02-04"},
+  1982:{h:"九紫火性",k:9,j:"壬",s:"戌",sd:"1982-02-04"},
+  1983:{h:"八白土性",k:8,j:"癸",s:"亥",sd:"1983-02-04"},
+  1984:{h:"七赤金性",k:7,j:"甲",s:"子",sd:"1984-02-04"},
+  1985:{h:"六白金性",k:6,j:"乙",s:"丑",sd:"1985-02-04"},
+  1986:{h:"五黄土性",k:5,j:"丙",s:"寅",sd:"1986-02-04"},
+  1987:{h:"四緑木性",k:4,j:"丁",s:"卯",sd:"1987-02-04"},
+  1988:{h:"三碧木性",k:3,j:"戊",s:"辰",sd:"1988-02-04"},
+  1989:{h:"二黒土性",k:2,j:"己",s:"巳",sd:"1989-02-04"},
+  1990:{h:"一白水性",k:1,j:"庚",s:"午",sd:"1990-02-04"},
+  1991:{h:"九紫火性",k:9,j:"辛",s:"未",sd:"1991-02-04"},
+  1992:{h:"八白土性",k:8,j:"壬",s:"申",sd:"1992-02-04"},
+  1993:{h:"七赤金性",k:7,j:"癸",s:"酉",sd:"1993-02-04"},
+  1994:{h:"六白金性",k:6,j:"甲",s:"戌",sd:"1994-02-04"},
+  1995:{h:"五黄土性",k:5,j:"乙",s:"亥",sd:"1995-02-04"},
+  1996:{h:"四緑木性",k:4,j:"丙",s:"子",sd:"1996-02-04"},
+  1997:{h:"三碧木性",k:3,j:"丁",s:"丑",sd:"1997-02-04"},
+  1998:{h:"二黒土性",k:2,j:"戊",s:"寅",sd:"1998-02-04"},
+  1999:{h:"一白水性",k:1,j:"己",s:"卯",sd:"1999-02-04"},
+  2000:{h:"九紫火性",k:9,j:"庚",s:"辰",sd:"2000-02-04"},
+  2001:{h:"八白土性",k:8,j:"辛",s:"巳",sd:"2001-02-04"},
+  2002:{h:"七赤金性",k:7,j:"壬",s:"午",sd:"2002-02-04"},
+  2003:{h:"六白金性",k:6,j:"癸",s:"未",sd:"2003-02-04"},
+  2004:{h:"五黄土性",k:5,j:"甲",s:"申",sd:"2004-02-04"},
+  2005:{h:"四緑木性",k:4,j:"乙",s:"酉",sd:"2005-02-04"},
+  2006:{h:"三碧木性",k:3,j:"丙",s:"戌",sd:"2006-02-04"},
+  2007:{h:"二黒土性",k:2,j:"丁",s:"亥",sd:"2007-02-04"},
+  2008:{h:"一白水性",k:1,j:"戊",s:"子",sd:"2008-02-04"},
+  2009:{h:"九紫火性",k:9,j:"己",s:"丑",sd:"2009-02-04"},
+  2010:{h:"八白土性",k:8,j:"庚",s:"寅",sd:"2010-02-04"},
+  2011:{h:"七赤金性",k:7,j:"辛",s:"卯",sd:"2011-02-04"},
+  2012:{h:"六白金性",k:6,j:"壬",s:"辰",sd:"2012-02-04"},
+  2013:{h:"五黄土性",k:5,j:"癸",s:"巳",sd:"2013-02-04"},
+  2014:{h:"四緑木性",k:4,j:"甲",s:"午",sd:"2014-02-04"},
+  2015:{h:"三碧木性",k:3,j:"乙",s:"未",sd:"2015-02-04"},
+  2016:{h:"二黒土性",k:2,j:"丙",s:"申",sd:"2016-02-04"},
+  2017:{h:"一白水性",k:1,j:"丁",s:"酉",sd:"2017-02-04"},
+  2018:{h:"九紫火性",k:9,j:"戊",s:"戌",sd:"2018-02-04"},
+  2019:{h:"八白土性",k:8,j:"己",s:"亥",sd:"2019-02-04"},
+  2020:{h:"七赤金性",k:7,j:"庚",s:"子",sd:"2020-02-04"},
+  2021:{h:"六白金性",k:6,j:"辛",s:"丑",sd:"2021-02-03"},
+  2022:{h:"五黄土性",k:5,j:"壬",s:"寅",sd:"2022-02-04"},
+  2023:{h:"四緑木性",k:4,j:"癸",s:"卯",sd:"2023-02-04"},
+  2024:{h:"三碧木性",k:3,j:"甲",s:"辰",sd:"2024-02-04"},
+  2025:{h:"二黒土性",k:2,j:"乙",s:"巳",sd:"2025-02-03"},
+  2026:{h:"一白水性",k:1,j:"丙",s:"午",sd:"2026-02-04"},
+};
+
+// バイオリズムテーブル: 中宮の星に基づく各星のフェーズ
+// 宮位(後天定位での位置番号)→フェーズ
+// 飛泊で各星がどの宮に入るかを算出し、宮位からフェーズを決定
+const BIORHYTHM_PHASES = {
+  // 宮位番号 → フェーズ (宮位 = 後天定位盤での位置)
+  // 後天定位: 1=坎(N), 2=坤(SW), 3=震(E), 4=巽(SE), 5=中宮, 6=乾(NW), 7=兌(W), 8=艮(NE), 9=離(S)
+  // 2026年 (一白中宮) の場合の各九性のフェーズ:
+  // 七赤→第1盛運期, 八白→第2盛運期, 九紫→第3盛運期, 一白→第4盛運期
+  // 二黒→盛衰合間, 三碧→第2衰運期, 四緑→第3衰運期, 五黄→第4衰運期, 六白→第5衰運期
+};
+
+// 中宮星別のバイオリズム固定テーブル
+// key: center star number, value: { star_number: phase_info }
+function getBiorhythmTable(centerStar) {
+  // The biorhythm follows a fixed sequence based on position in the 9-year cycle
+  // When star X is in center, the sequence from center going forward is:
+  // center(4th盛運) → next star(盛衰合間) → ... → previous star(3rd盛運)
+
+  // Fixed sequence: the star numbers cycle 1-9
+  // Phase assignment (relative to center star, going forward in number):
+  const phases = [
+    { name: '第4盛運期', type: 'rising', season: '夏の2年目・栄養を与える', desc: '運気の最高潮。これまでの努力が実を結ぶ時期。本命が中宮に位置（八方塞がり）。運勢は力強いが慢心に注意。' },
+    { name: '盛衰合期',  type: 'transition', season: '第5盛運期と第1衰運期が並行するターニングポイント', desc: '勢いはあるが慢心に注意。盛運から衰運への転換期。謙虚さと感謝を忘れずに。' },
+    { name: '第2衰運期', type: 'declining', season: '秋の2年目・収穫', desc: '内省と準備の時期。口の禍に注意。九年に一度の人生の決算期。' },
+    { name: '第3衰運期', type: 'declining', season: '冬の1年目・計画/準備', desc: '試練の時期。忍耐力が試される。基盤固めに徹する。' },
+    { name: '第4衰運期', type: 'declining', season: '冬の2年目・計画/準備', desc: '最も低い時期。静かに種を蒔き、来たる春に備える。' },
+    { name: '第5衰運期', type: 'declining', season: '冬の3年目・計画/準備', desc: '回復準備期。省エネモードで力を蓄える。暗剣・歳破の影響あり。' },
+    { name: '第1盛運期', type: 'rising', season: '春の1年目・種まき', desc: '新しいサイクルの始まり。積極的に行動を起こす時期。' },
+    { name: '第2盛運期', type: 'rising', season: '春の2年目・種まき', desc: '学びと基盤作り。人脈を広げ、知識を深める。' },
+    { name: '第3盛運期', type: 'rising', season: '夏の1年目・栄養を与える', desc: '飛躍の時期。チャンスを掴み、拡大に動く。' },
+  ];
+
+  const table = {};
+  for (let i = 0; i < 9; i++) {
+    const starNum = ((centerStar - 1 + i) % 9) + 1;
+    table[starNum] = phases[i];
+  }
+  return table;
+}
+
+// 五行関係
+const ELEMENT_ORDER = ['木', '火', '土', '金', '水'];
+
+function getElementRelation(el1, el2) {
+  if (el1 === el2) return { type: '比和', desc: `${el1}と${el2}は同じ五行。共鳴し合い、エネルギーが増幅する。` };
+
+  const i1 = ELEMENT_ORDER.indexOf(el1);
+  const i2 = ELEMENT_ORDER.indexOf(el2);
+
+  // 相生: 木→火→土→金→水→木 「愛と優しさで共存共栄するライフスタイル（正法輪身）」
+  if ((i1 + 1) % 5 === i2) return { type: '相生（正法輪身）', desc: `${el1}が${el2}を生む関係。愛と優しさで共存共栄するライフスタイル。あなたの力が時代を後押しします。`, detail: `${el1}→${el2}` };
+  if ((i2 + 1) % 5 === i1) return { type: '相生（正法輪身）', desc: `${el2}が${el1}を生む関係。愛と優しさで共存共栄するライフスタイル。時代の流れがあなたを育てます。`, detail: `${el2}→${el1}` };
+
+  // 相剋: 木→土、火→金、土→水、金→木、水→火 「智慧と叱咤激励で向上発展するライフスタイル（教令輪身）」
+  const KOKU = { '木':'土', '火':'金', '土':'水', '金':'木', '水':'火' };
+  if (KOKU[el1] === el2) return { type: '相剋（教令輪身）', desc: `${el1}が${el2}を剋す関係。智慧と叱咤激励で向上発展するライフスタイル。あなたが時代を鍛える力を持ちますが、消耗にも注意。`, detail: `${el1}→${el2}` };
+  if (KOKU[el2] === el1) return { type: '相剋（教令輪身）', desc: `${el2}が${el1}を剋す関係。智慧と叱咤激励で向上発展するライフスタイル。時代の流れがあなたを鍛えます。受け流す柔軟さが鍵。`, detail: `${el2}→${el1}` };
+
+  return { type: '不明', desc: '' };
+}
+
+// ナレッジベースのアドバイスデータ
+const ADVICE_DATA = {
+  // 九性別の基本性格キーワード
+  personality: {
+    1: { keyword: '信頼', motto: '上善如水', trait: '水のように柔軟で、誠実な生き方を重んじる。周囲からの信頼が厚い。' },
+    2: { keyword: '慈愛', motto: '上徳如谷', trait: '大地のように温かく包容力がある。無償の愛で人を育てる。' },
+    3: { keyword: '勇気', motto: '雷のインスピレーション', trait: '雷のように素早い行動力と直感を持つ。真実を追求する。' },
+    4: { keyword: '縁', motto: '風のバランス', trait: '風のように人と人を繋ぐ力がある。バランス感覚と奉仕の精神。' },
+    5: { keyword: '威', motto: '凹と凸の中心', trait: '帝王の星。中心に立つ力と、物事を構築する能力を持つ。' },
+    6: { keyword: '創造', motto: '旭日昇天', trait: '天のように高い志と創造性。リーダーシップで人を導く。' },
+    7: { keyword: '悦', motto: '人を癒す豊かさ', trait: '澤のように人を潤す力。コミュニケーション能力と社交性。' },
+    8: { keyword: '不動心', motto: '物事のイノベーション', trait: '山のように不動の心。変革を起こし、新しい時代を切り拓く。' },
+    9: { keyword: '離観', motto: '気品と気高さ', trait: '火のように明るく、知性と感性を併せ持つ。清廉な美意識。' },
+  },
+
+  // バイオリズムフェーズ別アドバイス
+  bioAdvice: {
+    '第1盛運期': {
+      doList: ['新しいプロジェクトを積極的に始める', '人脈作りに力を入れる', '学びの場に参加する', '種蒔きの意識で行動する'],
+      avoidList: ['過去への執着', '消極的な姿勢', '孤立する行動'],
+      cautionList: ['まだ成果を急がない時期。基盤作りに徹する', '焦りは禁物。じっくり取り組む姿勢が大切']
+    },
+    '第2盛運期': {
+      doList: ['知識と技術の習得に集中する', '信頼できる仲間との絆を深める', '健康管理に気を配る', '地道な努力を続ける'],
+      avoidList: ['近道や楽な方法への誘惑', '約束を軽んじること', '身体を酷使すること'],
+      cautionList: ['謙虚に学ぶ姿勢が運を開く', '地に足のついた行動が後の飛躍につながる']
+    },
+    '第3盛運期': {
+      doList: ['チャンスを積極的に掴む', '自分の強みを発揮する場面を作る', '人前に出る機会を増やす', '新規事業や転職のタイミング'],
+      avoidList: ['チャンスの見逃し', '過度な慎重さ', '自己過小評価'],
+      cautionList: ['飛躍の時期だが、謙虚さを忘れずに', '周囲への感謝を忘れないこと']
+    },
+    '第4盛運期': {
+      doList: ['これまでの成果を形にする', '社会的な評価を受ける行動を取る', '人に教える・導く立場に立つ', '感謝の気持ちを表現する'],
+      avoidList: ['傲慢な態度', '成功に酔って気を緩めること', '次のサイクルへの準備を怠ること'],
+      cautionList: ['運気の最高潮。しかし頂点の次は下降する。次の時期への準備を始めること', '成功体験を振り返り、次のサイクルに活かす知恵を蓄える']
+    },
+    '盛衰合間': {
+      doList: ['これまでの成果を整理する', '感謝と謙虚さを深める', '身の回りを整理整頓する', '無理のない範囲で活動を続ける'],
+      avoidList: ['大きな新規投資や冒険', '過度な拡大路線', '人間関係のトラブルを放置すること'],
+      cautionList: ['盛運から衰運への転換期。慎重さが求められる', '手放すべきものを見極める時期']
+    },
+    '第2衰運期': {
+      doList: ['内省と自己分析に時間を使う', '心身の健康を最優先にする', '読書や学習で内面を充実させる', '信頼できる人との関係を大切にする'],
+      avoidList: ['無理な拡大・新規事業の立ち上げ', '見栄やプライドでの行動', '借金や大きな買い物'],
+      cautionList: ['七赤盤上の年。口は禍の元。発言に注意', '内面を磨く時期。外に向けるエネルギーを内に向ける', '健康面では口腔・肺・胸部に注意']
+    },
+    '第3衰運期': {
+      doList: ['忍耐力を養う', '家族や身近な人との関係を修復する', '資格取得や自己投資', '心身のメンテナンスを徹底する'],
+      avoidList: ['焦りからの無謀な行動', '人間関係の断絶', '金銭的なリスクを取ること'],
+      cautionList: ['最も試練が大きい時期。しかし、ここで培った忍耐が次の盛運期の土台になる', '不動産・相続問題に注意']
+    },
+    '第4衰運期': {
+      doList: ['静かに過ごし、来たる春に備える', '精神的な修養に励む', '生活習慣を見直す', '断捨離と環境整備'],
+      avoidList: ['大きな決断を急ぐこと', '新しい人間関係の急な構築', '体力を過信した行動'],
+      cautionList: ['最も低い時期だが、底を打てば後は上がるだけ', '目・頭・ストレス性の症状に注意']
+    },
+    '第5衰運期': {
+      doList: ['次のサイクルの計画を立てる', '新しい分野の情報収集', '体力と気力の回復に努める', '人脈の棚卸しと整理'],
+      avoidList: ['まだ大きな行動を起こすこと', '焦って成果を求めること', '過去の成功パターンに固執すること'],
+      cautionList: ['回復準備期。省エネモードを維持しつつ、次の行動の準備を', '腎臓・泌尿器系・冷えに注意']
+    },
+  },
+
+  // 2026年固有の情報
+  year2026: {
+    theme: '上善如水（じょうぜんみずのごとし）— 艱難辛苦を玉と成す・誠実な生き方を実践する',
+    keywords: '上善如水・艱難辛苦・誠実',
+    generalAdvice: '2026年は一白水性の年。年の干支は丙午（ひのえうま）。水の性質である「流れに身を任せる柔軟さ」と「深い内省」が求められます。上善如水の心で、艱難辛苦を玉と成す誠実な生き方が大切です。',
+  },
+
+  // 九性×2026年の特別アドバイス
+  starYearAdvice: {
+    1: '本命星が中宮に入る年。自分自身を見つめ直す絶好の機会。人生の棚卸しをしましょう。',
+    2: '社会的な活動が活発になる年。人のために尽くすことで運が開ける。',
+    3: '内面を磨く年。発言に注意し、慎重な行動が吉。口は禍の元に注意。',
+    4: '試練と学びの年。忍耐が次のステージへの鍵となる。',
+    5: '静寂と準備の年。無理をせず、来年以降の飛躍に備える。',
+    6: '回復と計画の年。新しいサイクルに向けた情報収集と体力回復を。',
+    7: '新たなスタートの年。積極的に動き始める時期。',
+    8: '学びと成長の年。謙虚に知識を吸収し、基盤を固める。',
+    9: '飛躍と拡大の年。チャンスを掴み、自分の力を発揮する。',
+  },
+
+  // 健康注意
+  health: {
+    1: '腎臓・膀胱・泌尿器・足の冷えに注意',
+    2: '頭痛・消化器系に注意',
+    3: '高血圧・ノイローゼに注意。口の禍にも気をつける',
+    4: '腸内環境・風邪・インフルエンザに注意',
+    5: '胃腸・脾臓に注意。自己中心的にならないよう意識する',
+    6: '頭・皮膚・関節・肺・骨折・歯・心臓に注意。プライドの過信にも注意',
+    7: '口腔内・虫歯・肺・胸部に注意',
+    8: '不動産・相続問題に注意。先祖供養を忘れずに',
+    9: '目・ストレス性症状・不整脈・ホルモンバランスに注意',
+  }
+};
+
+// ============================================================
+// CALCULATION ENGINE
+// ============================================================
+
+function getSetsubunDate(year) {
+  // 早見表にデータがあればそこから節分日を取得
+  const entry = HAYAMI_TABLE[year];
+  if (entry) {
+    const parts = entry.sd.split('-');
+    return [parseInt(parts[1]), parseInt(parts[2])];
+  }
+  if (SETSUBUN_FEB4.has(year)) return [2, 4];
+  if (SETSUBUN_FEB2.has(year)) return [2, 2];
+  return [2, 3]; // default
+}
+
+function getCalcYear(year, month, day) {
+  const [sm, sd] = getSetsubunDate(year);
+  // 節分日より前（節分日当日含まず）なら前年扱い
+  if (month < sm || (month === sm && day < sd)) {
+    return year - 1;
+  }
+  return year;
+}
+
+// 早見表から本命星（九性番号 1〜9）を取得。テーブルにない年のみ計算にフォールバック
+function calcKyusei(year) {
+  const entry = HAYAMI_TABLE[year];
+  if (entry) return entry.k;
+  // フォールバック: 早見表の範囲外の年
+  let k = ((11 - ((year % 9 + 9) % 9)) % 9);
+  if (k <= 0) k += 9;
+  return k;
+}
+
+// 早見表から十干のインデックスを取得
+function calcStem(year) {
+  const entry = HAYAMI_TABLE[year];
+  if (entry) return STEMS.indexOf(entry.j);
+  return ((year - 4) % 10 + 10) % 10;
+}
+
+// 早見表から十二支のインデックスを取得
+function calcBranch(year) {
+  const entry = HAYAMI_TABLE[year];
+  if (entry) return BRANCHES.indexOf(entry.s);
+  return ((year - 4) % 12 + 12) % 12;
+}
+
+function generateStarChart(centerStar) {
+  // Generate the annual star chart
+  // The flying star pattern: each number occupies positions based on Luo Shu magic square
+  // When centerStar is in center, the rest follow the standard flying sequence
+  const chart = new Array(9);
+
+  for (let i = 0; i < 9; i++) {
+    // Star at this position = (centerStar - 1 + offset) % 9 + 1
+    // offset for each position in FLY_ORDER
+    const defaultStar = [4, 9, 2, 3, 5, 7, 8, 1, 6]; // SE,S,SW,E,C,W,NE,N,NW
+    const defaultCenter = 5;
+    const offset = (centerStar - defaultCenter + 9) % 9;
+    const starAtPos = ((defaultStar[i] - 1 + offset) % 9) + 1;
+    chart[i] = starAtPos;
+  }
+
+  return chart;
+}
+
+function findStarPosition(chart, starNum) {
+  return chart.indexOf(starNum);
+}
+
+function getGoouDirection(chart) {
+  const pos = findStarPosition(chart, 5);
+  if (pos === 4) return null; // center = no 五黄殺
+  return GRID_COMPASS[pos];
+}
+
+function getAnkenDirection(chart) {
+  const pos = findStarPosition(chart, 5);
+  if (pos === 4) return null;
+  // opposite in 3x3 grid
+  const opposites = [8, 7, 6, 5, 4, 3, 2, 1, 0];
+  return GRID_COMPASS[opposites[pos]];
+}
+
+function getSaihaDirection(branchIndex) {
+  return BRANCH_OPPOSITES[branchIndex];
+}
+
+function getElementClass(element) {
+  const map = { '木':'el-wood', '火':'el-fire', '土':'el-earth', '金':'el-metal', '水':'el-water' };
+  return map[element] || '';
+}
+
+// ============================================================
+// UI FUNCTIONS
+// ============================================================
+
+function initForm() {
+  const yearSel = document.getElementById('birthYear');
+  const monthSel = document.getElementById('birthMonth');
+  const daySel = document.getElementById('birthDay');
+
+  // 年セレクト（1920〜2026、デフォルト1962）
+  const emptyY = document.createElement('option');
+  emptyY.value = '';
+  emptyY.textContent = '選択';
+  emptyY.disabled = true;
+  yearSel.appendChild(emptyY);
+  for (let y = 2026; y >= 1920; y--) {
+    const opt = document.createElement('option');
+    opt.value = y;
+    opt.textContent = y + '年';
+    if (y === 1962) opt.selected = true;
+    yearSel.appendChild(opt);
+  }
+
+  // 空の初期オプション
+  const emptyM = document.createElement('option');
+  emptyM.value = '';
+  emptyM.textContent = '選択';
+  emptyM.disabled = true;
+  emptyM.selected = true;
+  monthSel.appendChild(emptyM);
+
+  for (let m = 1; m <= 12; m++) {
+    const opt = document.createElement('option');
+    opt.value = m;
+    opt.textContent = m + '月';
+    monthSel.appendChild(opt);
+  }
+
+  const emptyD = document.createElement('option');
+  emptyD.value = '';
+  emptyD.textContent = '選択';
+  emptyD.disabled = true;
+  emptyD.selected = true;
+  daySel.appendChild(emptyD);
+
+  for (let d = 1; d <= 31; d++) {
+    const opt = document.createElement('option');
+    opt.value = d;
+    opt.textContent = d + '日';
+    daySel.appendChild(opt);
+  }
+
+  // 保存済みAPIキーを復元
+  const savedKey = localStorage.getItem('gaiaFortuneApiKey');
+  if (savedKey) {
+    document.getElementById('chatApiKey').value = savedKey;
+  }
+}
+
+function showError(msg) {
+  const el = document.getElementById('errorMsg');
+  el.textContent = msg;
+  el.style.display = 'block';
+}
+
+function hideError() {
+  document.getElementById('errorMsg').style.display = 'none';
+}
+
+function isValidDate(y, m, d) {
+  const date = new Date(y, m - 1, d);
+  return date.getFullYear() === y && date.getMonth() === m - 1 && date.getDate() === d;
+}
+
+async function doFortune() {
+  try {
+  hideError();
+
+  const year = parseInt(document.getElementById('birthYear').value);
+  const month = parseInt(document.getElementById('birthMonth').value);
+  const day = parseInt(document.getElementById('birthDay').value);
+
+  if (isNaN(year) || isNaN(month) || isNaN(day)) {
+    showError('すべての項目を入力してください。');
+    return;
+  }
+  if (!isValidDate(year, month, day)) {
+    showError('正しい日付を入力してください。');
+    return;
+  }
+
+  // === サーバーAPIで算出（早見表を直接参照・データは1箇所だけ） ===
+  const resp = await fetch('/api/calculate', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ year, month, day }),
+  });
+  const result = await resp.json();
+  if (!result.success) {
+    showError(result.error || '算出に失敗しました。');
+    return;
+  }
+  const d = result.data;
+
+  const kyusei = d.kyuseiNum;
+  const stemIdx = STEMS.indexOf(d.stem);
+  const branchIdx = BRANCHES.indexOf(d.branch);
+  const myElement = d.element;
+
+  // 2026 year data（サーバーから受け取った年盤を使用）
+  const chart = d.chart;
+  const targetBranchIdx = BRANCHES.indexOf('午'); // 2026年は午年
+  const bioTable = getBiorhythmTable(1); // 2026年中宮は一白水性
+  const bio = bioTable[kyusei];
+
+  const yearElement = KYUSEI_ELEMENTS[1]; // 一白水性 = 水
+  const elRelation = getElementRelation(myElement, yearElement);
+
+  // Render profile
+  document.getElementById('rKyusei').textContent = d.kyusei;
+  document.getElementById('rKyusei').style.color = getElementColor(myElement);
+  document.getElementById('rStem').textContent = `${d.stem}（${d.stemReading}）`;
+  document.getElementById('rBranch').textContent = `${d.branch}（${d.branchReading}）`;
+
+  const elDiv = document.getElementById('rElement');
+  elDiv.innerHTML = `<span class="element-badge ${getElementClass(myElement)}">${myElement}</span> <span class="element-badge ${getElementClass(d.stemElement)}">${d.stemElement}</span>`;
+
+  // Render star chart
+  renderStarChart(chart, kyusei);
+
+  // Render biorhythm（サーバーの正式データを優先、フォールバックでローカル）
+  const bioPhaseEl = document.getElementById('rBioPhase');
+  bioPhaseEl.textContent = d.bioPhase || bio.name;
+  bioPhaseEl.className = 'bio-phase ' + (bio ? bio.type : '');
+  document.getElementById('rBioDesc').textContent = d.bioSeason || (bio ? bio.season : '');
+  document.getElementById('rBioDetail').textContent = bio ? bio.desc : '';
+
+  // Render directions
+  renderDirections(chart, targetBranchIdx);
+
+  // Render element relation
+  renderElementRelation(myElement, yearElement, elRelation);
+
+  // Render advice
+  renderAdvice(kyusei, d.bioPhase || bio.name);
+
+  // Show chat section
+  document.getElementById('chatSection').style.display = 'block';
+  document.getElementById('chatMessages').innerHTML = '';
+  window._chatHistory = [];
+
+  // AI用のfortuneContext（サーバーが構築済み）
+  window._fortuneContext = d.fortuneContext;
+
+  // Show quick questions
+  document.getElementById('quickQuestions').style.display = 'flex';
+  document.querySelectorAll('.question-card').forEach(c => c.classList.remove('selected'));
+
+  // Show results
+  document.getElementById('results').style.display = 'block';
+  document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+  } catch(e) {
+    showError('エラーが発生しました: ' + e.message);
+    console.error(e);
+  }
+}
+
+function getElementColor(el) {
+  const map = { '木':'#4caf50', '火':'#f44336', '土':'#ff9800', '金':'#ffd700', '水':'#2196f3' };
+  return map[el] || '#fff';
+}
+
+function renderStarChart(chart, myKyusei) {
+  const container = document.getElementById('starChart');
+  container.innerHTML = '';
+
+  for (let i = 0; i < 9; i++) {
+    const star = chart[i];
+    const cell = document.createElement('div');
+    cell.className = 'star-cell';
+
+    if (i === 4) cell.classList.add('center');
+    if (star === myKyusei) cell.classList.add('highlight');
+    if (star === 5 && i !== 4) cell.classList.add('danger');
+
+    const el = KYUSEI_ELEMENTS[star];
+    cell.innerHTML = `
+      <div class="dir">${GRID_DIRS[i]}</div>
+      <div class="star-name" style="color:${getElementColor(el)}">${KYUSEI_NAMES[star]}</div>
+      <div class="star-num">${KYUSEI_SYMBOLS[star]}</div>
+    `;
+    container.appendChild(cell);
+  }
+}
+
+function renderDirections(chart, branchIdx) {
+  const list = document.getElementById('rDirections');
+  list.innerHTML = '';
+
+  const goou = getGoouDirection(chart);
+  const anken = getAnkenDirection(chart);
+  const saiha = getSaihaDirection(branchIdx);
+
+  const items = [];
+  if (goou) items.push({ icon: '⚠', cls: 'dir-warn', label: '五黄殺', dir: goou, desc: 'この方位への移動・旅行・引越しは避けてください' });
+  if (anken) items.push({ icon: '⚠', cls: 'dir-warn', label: '暗剣殺', dir: anken, desc: 'この方位から予期せぬ災難が来る可能性。警戒してください' });
+  items.push({ icon: '△', cls: 'dir-caution', label: '歳破', dir: saiha, desc: 'この方位への大きな行動（引越し・建築等）は避けてください' });
+
+  if (!goou) {
+    items.unshift({ icon: '○', cls: '', label: '五黄殺・暗剣殺', dir: '該当なし', desc: '五黄が中宮のため、五黄殺・暗剣殺はありません' });
+  }
+
+  items.forEach(item => {
+    const li = document.createElement('li');
+    li.innerHTML = `<span class="icon ${item.cls}">${item.icon}</span><div><strong>${item.label}：${item.dir}</strong><br><span style="font-size:.8rem;color:var(--muted);">${item.desc}</span></div>`;
+    list.appendChild(li);
+  });
+
+  // Important note about direction influence
+  const note = document.createElement('li');
+  note.style.background = 'rgba(33,150,243,.1)';
+  note.innerHTML = `<span class="icon" style="color:var(--water);">i</span><div><span style="font-size:.85rem;">暗剣殺・歳破は<strong>方位</strong>に対する警告です。特定の九性や十二支の人に直接影響するものではありません。</span></div>`;
+  list.appendChild(note);
+}
+
+function renderElementRelation(myEl, yearEl, relation) {
+  const container = document.getElementById('rElementRelation');
+
+  let relColor = '#fff';
+  if (relation.type === '相生') relColor = '#4caf50';
+  else if (relation.type === '相剋') relColor = '#f44336';
+  else if (relation.type === '比和') relColor = '#2196f3';
+
+  container.innerHTML = `
+    <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+      <span class="element-badge ${getElementClass(myEl)}">あなた：${myEl}</span>
+      <span style="font-size:1.2rem;">×</span>
+      <span class="element-badge ${getElementClass(yearEl)}">2026年：${yearEl}</span>
+    </div>
+    <div class="relation-box">
+      <div class="rel-type" style="color:${relColor}">${relation.type}${relation.detail ? ' （' + relation.detail + '）' : ''}</div>
+      <div class="rel-desc">${relation.desc}</div>
+    </div>
+  `;
+}
+
+function renderAdvice(kyusei, phaseName) {
+  const container = document.getElementById('rAdvice');
+  const bio = ADVICE_DATA.bioAdvice[phaseName];
+  const personality = ADVICE_DATA.personality[kyusei];
+  const starAdvice = ADVICE_DATA.starYearAdvice[kyusei];
+  const health = ADVICE_DATA.health[kyusei];
+  const year = ADVICE_DATA.year2026;
+
+  let html = '';
+
+  // Year theme
+  html += `<div style="background:var(--bg);border-radius:8px;padding:14px;margin-bottom:16px;">`;
+  html += `<div style="font-size:.85rem;color:var(--muted);">2026年テーマ</div>`;
+  html += `<div style="margin-top:4px;">${year.theme}</div>`;
+  html += `<div style="margin-top:8px;font-size:.9rem;">${year.generalAdvice}</div>`;
+  html += `</div>`;
+
+  // Personal star message
+  html += `<div style="background:var(--bg);border-radius:8px;padding:14px;margin-bottom:16px;">`;
+  html += `<div style="font-size:.85rem;color:var(--muted);">${KYUSEI_NAMES[kyusei]}の2026年</div>`;
+  html += `<div style="margin-top:4px;">${starAdvice}</div>`;
+  html += `<div style="margin-top:4px;font-size:.9rem;color:var(--muted);">キーワード：${personality.keyword}（${personality.motto}）</div>`;
+  html += `</div>`;
+
+  if (bio) {
+    // Do
+    html += `<div class="advice-section advice-do"><h4>すべきこと</h4><ul>`;
+    bio.doList.forEach(item => html += `<li>${item}</li>`);
+    html += `</ul></div>`;
+
+    // Avoid
+    html += `<div class="advice-section advice-avoid"><h4>避けるべきこと</h4><ul>`;
+    bio.avoidList.forEach(item => html += `<li>${item}</li>`);
+    html += `</ul></div>`;
+
+    // Caution
+    html += `<div class="advice-section advice-caution"><h4>注意点</h4><ul>`;
+    bio.cautionList.forEach(item => html += `<li>${item}</li>`);
+    html += `</ul></div>`;
+  }
+
+  // Health
+  html += `<div style="background:rgba(244,67,54,.08);border-radius:8px;padding:14px;margin-top:8px;">`;
+  html += `<div style="font-size:.85rem;color:var(--fire);">健康面の注意</div>`;
+  html += `<div style="margin-top:4px;font-size:.9rem;">${health}</div>`;
+  html += `</div>`;
+
+  container.innerHTML = html;
+}
+
+// ============================================================
+// AI CHAT SYSTEM
+// ============================================================
+
+async function sendChat() {
+  const input = document.getElementById('chatInput');
+  const message = input.value.trim();
+  if (!message) return;
+
+  const apiKey = document.getElementById('chatApiKey').value.trim();
+  if (!apiKey) {
+    alert('Anthropic APIキーを入力してください。');
+    return;
+  }
+  // APIキーをlocalStorageに保存
+  localStorage.setItem('gaiaFortuneApiKey', apiKey);
+
+  // Add user message to UI
+  addChatMessage('user', message);
+  input.value = '';
+
+  // Disable send button
+  const btn = document.getElementById('chatSendBtn');
+  btn.disabled = true;
+  btn.textContent = '応答中...';
+
+  // Add loading indicator
+  const loadingEl = document.createElement('div');
+  loadingEl.className = 'chat-loading';
+  loadingEl.textContent = '占い師が鑑定中です...';
+  document.getElementById('chatMessages').appendChild(loadingEl);
+  scrollChat();
+
+  try {
+    const res = await fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        message,
+        fortuneContext: window._fortuneContext,
+        history: window._chatHistory,
+        anthropicApiKey: apiKey,
+      }),
+    });
+
+    const data = await res.json();
+    loadingEl.remove();
+
+    if (data.success) {
+      addChatMessage('assistant', data.reply);
+      window._chatHistory.push({ role: 'user', content: message });
+      window._chatHistory.push({ role: 'assistant', content: data.reply });
+    } else {
+      addChatMessage('assistant', 'エラー: ' + (data.error || '応答の生成に失敗しました。'));
+    }
+  } catch (err) {
+    loadingEl.remove();
+    addChatMessage('assistant', 'エラー: サーバーに接続できませんでした。');
+  }
+
+  btn.disabled = false;
+  btn.textContent = '送信';
+}
+
+function addChatMessage(role, text) {
+  const div = document.createElement('div');
+  div.className = 'chat-msg ' + role;
+  div.textContent = text;
+  document.getElementById('chatMessages').appendChild(div);
+  scrollChat();
+}
+
+function scrollChat() {
+  const container = document.getElementById('chatMessages');
+  container.scrollTop = container.scrollHeight;
+}
+
+// Enter key to send (Shift+Enter for newline)
+document.addEventListener('DOMContentLoaded', () => {
+  const input = document.getElementById('chatInput');
+  if (input) {
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        sendChat();
+      }
+    });
+  }
+});
+
+function sendQuickQuestion(el, message) {
+  // Highlight selected card
+  document.querySelectorAll('.question-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+
+  // Put message in chat input and send
+  document.getElementById('chatInput').value = message;
+  sendChat();
+
+  // Hide quick questions after selection
+  document.getElementById('quickQuestions').style.display = 'none';
+}
+
+function toggleApiHelp() {
+  const el = document.getElementById('apiHelp');
+  const toggle = document.querySelector('.api-help-toggle');
+  if (el.style.display === 'none') {
+    el.style.display = 'block';
+    toggle.textContent = '▼ 取得方法';
+  } else {
+    el.style.display = 'none';
+    toggle.textContent = '▶ 取得方法';
+  }
+}
+
+// ============================================================
+// PDF SAVE
+// ============================================================
+
+function savePDF() {
+  const birthY = document.getElementById('birthYear').value;
+  const birthM = document.getElementById('birthMonth').value;
+  const birthD = document.getElementById('birthDay').value;
+  const now = new Date();
+  const dateStr = `${now.getFullYear()}/${now.getMonth()+1}/${now.getDate()}`;
+  const ctx = window._fortuneContext;
+
+  function cleanContent(id) {
+    const el = document.getElementById(id);
+    if (!el) return '';
+    return el.innerHTML
+      .replace(/var\(--muted\)/g, '#666').replace(/var\(--text\)/g, '#222')
+      .replace(/var\(--bg\)/g, '#f5f5f5').replace(/var\(--accent\)/g, '#8b7ed8')
+      .replace(/var\(--accent2\)/g, '#d4a574').replace(/var\(--fire\)/g, '#d32f2f')
+      .replace(/var\(--wood\)/g, '#388e3c').replace(/var\(--earth\)/g, '#e65100')
+      .replace(/var\(--water\)/g, '#1565c0').replace(/var\(--metal\)/g, '#f9a825')
+      .replace(/var\(--card\)/g, '#fff').replace(/var\(--border\)/g, '#ddd');
+  }
+
+  let chatHtml = '';
+  const chatMsgs = document.querySelectorAll('#chatMessages .chat-msg');
+  if (chatMsgs.length > 0) {
+    chatMsgs.forEach(msg => {
+      const isUser = msg.classList.contains('user');
+      const label = isUser ? '相談内容' : '占い師の回答';
+      const bgColor = isUser ? '#f0ecff' : '#f5f5f5';
+      const borderColor = isUser ? '#8b7ed8' : '#d4a574';
+      chatHtml += `<div style="background:${bgColor};border-left:3px solid ${borderColor};padding:12px 16px;margin-bottom:10px;border-radius:4px;">
+        <div style="font-size:.75rem;color:#888;margin-bottom:4px;">${label}</div>
+        <div style="font-size:.9rem;white-space:pre-wrap;">${msg.textContent}</div>
+      </div>`;
+    });
+    chatHtml = `<div style="margin-bottom:24px;">
+      <h2>占い師への相談（AI対話）</h2>
+      ${chatHtml}
+    </div>`;
+  }
+
+  const htmlContent = `<!DOCTYPE html><html><head><meta charset="UTF-8">
+<title>ガイアコード鑑定結果</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Hiragino Kaku Gothic ProN","Yu Gothic","Noto Sans JP",sans-serif;color:#222;line-height:1.8;padding:30px 40px}
+h1{font-size:1.5rem;color:#8b7ed8}
+h2{font-size:1.1rem;color:#8b7ed8;border-bottom:1px solid #ddd;padding-bottom:6px;margin-bottom:12px}
+.section{margin-bottom:24px}
+table{width:100%;border-collapse:collapse;margin:10px 0}
+td{padding:8px;border:1px solid #ddd}
+td:first-child{background:#f8f8f8;width:30%}
+ul{padding-left:20px}
+.footer{text-align:center;color:#aaa;font-size:.75rem;margin-top:30px;border-top:1px solid #ddd;padding-top:12px}
+</style>
+</head><body>
+<div style="text-align:center;margin-bottom:30px;border-bottom:2px solid #8b7ed8;padding-bottom:20px">
+  <h1>時刻の啓示｜運命の羅針盤</h1>
+  <div style="color:#888;font-size:.9rem">ガイアコード鑑定結果 — 2026年版</div>
+  <div style="margin-top:10px;font-size:.9rem">生年月日：${birthY}年${birthM}月${birthD}日　｜　鑑定日：${dateStr}</div>
+</div>
+<div class="section"><h2>あなたの命盤</h2>
+<table><tr><td>本命星</td><td>${ctx.kyusei}</td></tr>
+<tr><td>十干</td><td>${ctx.stem}</td></tr>
+<tr><td>十二支</td><td>${ctx.branch}</td></tr>
+<tr><td>五行</td><td>${ctx.element}</td></tr></table></div>
+<div class="section"><h2>2026年のバイオリズム</h2>
+<p><strong>${ctx.bioPhase}</strong>（${ctx.bioSeason}）</p>
+<p>${document.getElementById('rBioDetail').textContent}</p></div>
+<div class="section"><h2>2026年の方位情報</h2>
+<ul><li>五黄殺：${ctx.goouDir}</li><li>暗剣殺：${ctx.ankenDir}</li><li>歳破：${ctx.saihaDir}</li></ul></div>
+<div class="section"><h2>五行関係（あなた × 2026年）</h2>${cleanContent('rElementRelation')}</div>
+<div class="section"><h2>2026年の鑑定アドバイス</h2>${cleanContent('rAdvice')}</div>
+${chatHtml}
+<div class="footer">時刻の啓示｜運命の羅針盤 — ガイアコード鑑定ツール</div>
+</body></html>`;
+
+  // iframe方式で印刷ダイアログを開く
+  const iframe = document.createElement('iframe');
+  iframe.style.cssText = 'position:fixed;left:0;top:0;width:100%;height:100%;z-index:999999;border:none;background:#fff;';
+  document.body.appendChild(iframe);
+
+  const doc = iframe.contentDocument || iframe.contentWindow.document;
+  doc.open();
+  doc.write(htmlContent);
+  doc.close();
+
+  // iframeの読み込み完了後に印刷
+  iframe.onload = function() {
+    setTimeout(() => {
+      iframe.contentWindow.focus();
+      iframe.contentWindow.print();
+      // 印刷ダイアログが閉じた後にiframeを削除
+      setTimeout(() => document.body.removeChild(iframe), 1000);
+    }, 500);
+  };
+}
+
+// Init
+initForm();
+</script>
+</body>
+</html>

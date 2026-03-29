@@ -1,0 +1,1530 @@
+{
+  "_README": {
+    "title": "ガイアコード鑑定ツール - バイオリズム完全データ（2018〜2040年）",
+    "date": "2026-03-25",
+    "author": "山内 直",
+    "description": "2018年から2040年までの全九性のバイオリズム、年盤上の位置、注意事項を網羅。このデータにより、来年以降の運勢についても正確な回答が可能になります。",
+    "files_status": {
+      "gaia_code_master_data.json": "変更不要",
+      "setsubun_supplement.json": "変更不要",
+      "additional_rules.json": "biorhythm_2027セクションを削除。それ以外は変更不要",
+      "biorhythm_full.json": "新規追加（このファイル）"
+    }
+  },
+  "legend": {
+    "board_number": "その九性がその年に乗っている盤（1〜9）",
+    "alerts": {
+      "暗剣": "他動的トラブル、詐欺、事故、損失、ケガ、破綻など災厄に注意",
+      "歳破": "自発的トラブル、病気、事故、損失、ケガ、破綻など災厄に注意",
+      "剋": "その年の中宮の九性に剋される関係にある（試練の年）",
+      "エコノミー": "第5衰運期。運気が最も低下し、判断ミス・体調不良等に注意"
+    }
+  },
+  "biorhythm_cycle": {
+    "_description": "盤番号→バイオリズムの対応表。2026年の『時の啓示』と完全照合済み。全九性・全年に共通。",
+    "_verification": "三碧木性2026年=7盤=第2衰運期（時の啓示P.10と一致）で確認済み",
+    "mapping": {
+      "1": "第5衰運期",
+      "2": "第1盛運期",
+      "3": "第2盛運期",
+      "4": "第3盛運期",
+      "5": "第4盛運期",
+      "6": "盛衰合期",
+      "7": "第2衰運期",
+      "8": "第3衰運期",
+      "9": "第4衰運期"
+    }
+  },
+  "yearly_data": {
+    "2018": {
+      "year_info": {
+        "jikkan": "戊",
+        "junishi": "戌",
+        "chuuguu": "九紫火性"
+      },
+      "kyusei_data": {
+        "一白水性": {
+          "board": 6,
+          "biorhythm": "盛衰合期",
+          "alerts": []
+        },
+        "二黒土性": {
+          "board": 7,
+          "biorhythm": "第2衰運期",
+          "alerts": []
+        },
+        "三碧木性": {
+          "board": 8,
+          "biorhythm": "第3衰運期",
+          "alerts": []
+        },
+        "四緑木性": {
+          "board": 9,
+          "biorhythm": "第4衰運期",
+          "alerts": [
+            "暗剣"
+          ]
+        },
+        "五黄土性": {
+          "board": 1,
+          "biorhythm": "第5衰運期",
+          "alerts": [
+            "エコノミー"
+          ]
+        },
+        "六白金性": {
+          "board": 2,
+          "biorhythm": "第1盛運期",
+          "alerts": [
+            "剋"
+          ]
+        },
+        "七赤金性": {
+          "board": 3,
+          "biorhythm": "第2盛運期",
+          "alerts": [
+            "剋"
+          ]
+        },
+        "八白土性": {
+          "board": 4,
+          "biorhythm": "第3盛運期",
+          "alerts": [
+            "歳破"
+          ]
+        },
+        "九紫火性": {
+          "board": 5,
+          "biorhythm": "第4盛運期",
+          "alerts": []
+        }
+      }
+    },
+    "2019": {
+      "year_info": {
+        "jikkan": "己",
+        "junishi": "亥",
+        "chuuguu": "八白土性"
+      },
+      "kyusei_data": {
+        "一白水性": {
+          "board": 7,
+          "biorhythm": "第2衰運期",
+          "alerts": [
+            "剋"
+          ]
+        },
+        "二黒土性": {
+          "board": 8,
+          "biorhythm": "第3衰運期",
+          "alerts": [
+            "暗剣"
+          ]
+        },
+        "三碧木性": {
+          "board": 9,
+          "biorhythm": "第4衰運期",
+          "alerts": []
+        },
+        "四緑木性": {
+          "board": 1,
+          "biorhythm": "第5衰運期",
+          "alerts": [
+            "エコノミー"
+          ]
+        },
+        "五黄土性": {
+          "board": 2,
+          "biorhythm": "第1盛運期",
+          "alerts": []
+        },
+        "六白金性": {
+          "board": 3,
+          "biorhythm": "第2盛運期",
+          "alerts": []
+        },
+        "七赤金性": {
+          "board": 4,
+          "biorhythm": "第3盛運期",
+          "alerts": [
+            "歳破"
+          ]
+        },
+        "八白土性": {
+          "board": 5,
+          "biorhythm": "第4盛運期",
+          "alerts": []
+        },
+        "九紫火性": {
+          "board": 6,
+          "biorhythm": "盛衰合期",
+          "alerts": []
+        }
+      }
+    },
+    "2020": {
+      "year_info": {
+        "jikkan": "庚",
+        "junishi": "子",
+        "chuuguu": "七赤金性"
+      },
+      "kyusei_data": {
+        "一白水性": {
+          "board": 8,
+          "biorhythm": "第3衰運期",
+          "alerts": []
+        },
+        "二黒土性": {
+          "board": 9,
+          "biorhythm": "第4衰運期",
+          "alerts": [
+            "歳破"
+          ]
+        },
+        "三碧木性": {
+          "board": 1,
+          "biorhythm": "第5衰運期",
+          "alerts": [
+            "剋",
+            "エコノミー"
+          ]
+        },
+        "四緑木性": {
+          "board": 2,
+          "biorhythm": "第1盛運期",
+          "alerts": [
+            "剋"
+          ]
+        },
+        "五黄土性": {
+          "board": 3,
+          "biorhythm": "第2盛運期",
+          "alerts": []
+        },
+        "六白金性": {
+          "board": 4,
+          "biorhythm": "第3盛運期",
+          "alerts": []
+        },
+        "七赤金性": {
+          "board": 5,
+          "biorhythm": "第4盛運期",
+          "alerts": []
+        },
+        "八白土性": {
+          "board": 6,
+          "biorhythm": "盛衰合期",
+          "alerts": []
+        },
+        "九紫火性": {
+          "board": 7,
+          "biorhythm": "第2衰運期",
+          "alerts": [
+            "暗剣"
+          ]
+        }
+      }
+    },
+    "2021": {
+      "year_info": {
+        "jikkan": "辛",
+        "junishi": "丑",
+        "chuuguu": "六白金性"
+      },
+      "kyusei_data": {
+        "一白水性": {
+          "board": 9,
+          "biorhythm": "第4衰運期",
+          "alerts": []
+        },
+        "二黒土性": {
+          "board": 1,
+          "biorhythm": "第5衰運期",
+          "alerts": [
+            "エコノミー"
+          ]
+        },
+        "三碧木性": {
+          "board": 2,
+          "biorhythm": "第1盛運期",
+          "alerts": [
+            "歳破",
+            "剋"
+          ]
+        },
+        "四緑木性": {
+          "board": 3,
+          "biorhythm": "第2盛運期",
+          "alerts": [
+            "剋"
+          ]
+        },
+        "五黄土性": {
+          "board": 4,
+          "biorhythm": "第3盛運期",
+          "alerts": []
+        },
+        "六白金性": {
+          "board": 5,
+          "biorhythm": "第4盛運期",
+          "alerts": []
+        },
+        "七赤金性": {
+          "board": 6,
+          "biorhythm": "盛衰合期",
+          "alerts": [
+            "暗剣"
+          ]
+        },
+        "八白土性": {
+          "board": 7,
+          "biorhythm": "第2衰運期",
+          "alerts": []
+        },
+        "九紫火性": {
+          "board": 8,
+          "biorhythm": "第3衰運期",
+          "alerts": []
+        }
+      }
+    },
+    "2022": {
+      "year_info": {
+        "jikkan": "壬",
+        "junishi": "寅",
+        "chuuguu": "五黄土性"
+      },
+      "kyusei_data": {
+        "一白水性": {
+          "board": 1,
+          "biorhythm": "第5衰運期",
+          "alerts": [
+            "剋",
+            "エコノミー"
+          ]
+        },
+        "二黒土性": {
+          "board": 2,
+          "biorhythm": "第1盛運期",
+          "alerts": [
+            "歳破"
+          ]
+        },
+        "三碧木性": {
+          "board": 3,
+          "biorhythm": "第2盛運期",
+          "alerts": []
+        },
+        "四緑木性": {
+          "board": 4,
+          "biorhythm": "第3盛運期",
+          "alerts": []
+        },
+        "五黄土性": {
+          "board": 5,
+          "biorhythm": "第4盛運期",
+          "alerts": []
+        },
+        "六白金性": {
+          "board": 6,
+          "biorhythm": "盛衰合期",
+          "alerts": []
+        },
+        "七赤金性": {
+          "board": 7,
+          "biorhythm": "第2衰運期",
+          "alerts": []
+        },
+        "八白土性": {
+          "board": 8,
+          "biorhythm": "第3衰運期",
+          "alerts": []
+        },
+        "九紫火性": {
+          "board": 9,
+          "biorhythm": "第4衰運期",
+          "alerts": []
+        }
+      }
+    },
+    "2023": {
+      "year_info": {
+        "jikkan": "癸",
+        "junishi": "卯",
+        "chuuguu": "四緑木性"
+      },
+      "kyusei_data": {
+        "一白水性": {
+          "board": 2,
+          "biorhythm": "第1盛運期",
+          "alerts": []
+        },
+        "二黒土性": {
+          "board": 3,
+          "biorhythm": "第2盛運期",
+          "alerts": [
+            "剋"
+          ]
+        },
+        "三碧木性": {
+          "board": 4,
+          "biorhythm": "第3盛運期",
+          "alerts": [
+            "暗剣"
+          ]
+        },
+        "四緑木性": {
+          "board": 5,
+          "biorhythm": "第4盛運期",
+          "alerts": []
+        },
+        "五黄土性": {
+          "board": 6,
+          "biorhythm": "盛衰合期",
+          "alerts": [
+            "剋"
+          ]
+        },
+        "六白金性": {
+          "board": 7,
+          "biorhythm": "第2衰運期",
+          "alerts": [
+            "歳破"
+          ]
+        },
+        "七赤金性": {
+          "board": 8,
+          "biorhythm": "第3衰運期",
+          "alerts": []
+        },
+        "八白土性": {
+          "board": 9,
+          "biorhythm": "第4衰運期",
+          "alerts": [
+            "剋"
+          ]
+        },
+        "九紫火性": {
+          "board": 1,
+          "biorhythm": "第5衰運期",
+          "alerts": [
+            "エコノミー"
+          ]
+        }
+      }
+    },
+    "2024": {
+      "year_info": {
+        "jikkan": "甲",
+        "junishi": "辰",
+        "chuuguu": "三碧木性"
+      },
+      "kyusei_data": {
+        "一白水性": {
+          "board": 3,
+          "biorhythm": "第2盛運期",
+          "alerts": [
+            "暗剣"
+          ]
+        },
+        "二黒土性": {
+          "board": 4,
+          "biorhythm": "第3盛運期",
+          "alerts": [
+            "剋"
+          ]
+        },
+        "三碧木性": {
+          "board": 5,
+          "biorhythm": "第4盛運期",
+          "alerts": []
+        },
+        "四緑木性": {
+          "board": 6,
+          "biorhythm": "盛衰合期",
+          "alerts": [
+            "歳破"
+          ]
+        },
+        "五黄土性": {
+          "board": 7,
+          "biorhythm": "第2衰運期",
+          "alerts": [
+            "剋"
+          ]
+        },
+        "六白金性": {
+          "board": 8,
+          "biorhythm": "第3衰運期",
+          "alerts": []
+        },
+        "七赤金性": {
+          "board": 9,
+          "biorhythm": "第4衰運期",
+          "alerts": []
+        },
+        "八白土性": {
+          "board": 1,
+          "biorhythm": "第5衰運期",
+          "alerts": [
+            "剋",
+            "エコノミー"
+          ]
+        },
+        "九紫火性": {
+          "board": 2,
+          "biorhythm": "第1盛運期",
+          "alerts": []
+        }
+      }
+    },
+    "2025": {
+      "year_info": {
+        "jikkan": "乙",
+        "junishi": "巳",
+        "chuuguu": "二黒土性"
+      },
+      "kyusei_data": {
+        "一白水性": {
+          "board": 4,
+          "biorhythm": "第3盛運期",
+          "alerts": [
+            "剋"
+          ]
+        },
+        "二黒土性": {
+          "board": 5,
+          "biorhythm": "第4盛運期",
+          "alerts": []
+        },
+        "三碧木性": {
+          "board": 6,
+          "biorhythm": "盛衰合期",
+          "alerts": [
+            "歳破"
+          ]
+        },
+        "四緑木性": {
+          "board": 7,
+          "biorhythm": "第2衰運期",
+          "alerts": []
+        },
+        "五黄土性": {
+          "board": 8,
+          "biorhythm": "第3衰運期",
+          "alerts": []
+        },
+        "六白金性": {
+          "board": 9,
+          "biorhythm": "第4衰運期",
+          "alerts": []
+        },
+        "七赤金性": {
+          "board": 1,
+          "biorhythm": "第5衰運期",
+          "alerts": [
+            "エコノミー"
+          ]
+        },
+        "八白土性": {
+          "board": 2,
+          "biorhythm": "第1盛運期",
+          "alerts": [
+            "暗剣"
+          ]
+        },
+        "九紫火性": {
+          "board": 3,
+          "biorhythm": "第2盛運期",
+          "alerts": []
+        }
+      }
+    },
+    "2026": {
+      "year_info": {
+        "jikkan": "丙",
+        "junishi": "午",
+        "chuuguu": "一白水性"
+      },
+      "kyusei_data": {
+        "一白水性": {
+          "board": 5,
+          "biorhythm": "第4盛運期",
+          "alerts": []
+        },
+        "二黒土性": {
+          "board": 6,
+          "biorhythm": "盛衰合期",
+          "alerts": []
+        },
+        "三碧木性": {
+          "board": 7,
+          "biorhythm": "第2衰運期",
+          "alerts": []
+        },
+        "四緑木性": {
+          "board": 8,
+          "biorhythm": "第3衰運期",
+          "alerts": []
+        },
+        "五黄土性": {
+          "board": 9,
+          "biorhythm": "第4衰運期",
+          "alerts": []
+        },
+        "六白金性": {
+          "board": 1,
+          "biorhythm": "第5衰運期",
+          "alerts": [
+            "歳破",
+            "エコノミー",
+            "暗剣"
+          ]
+        },
+        "七赤金性": {
+          "board": 2,
+          "biorhythm": "第1盛運期",
+          "alerts": []
+        },
+        "八白土性": {
+          "board": 3,
+          "biorhythm": "第2盛運期",
+          "alerts": []
+        },
+        "九紫火性": {
+          "board": 4,
+          "biorhythm": "第3盛運期",
+          "alerts": [
+            "剋"
+          ]
+        }
+      }
+    },
+    "2027": {
+      "year_info": {
+        "jikkan": "丁",
+        "junishi": "未",
+        "chuuguu": "九紫火性"
+      },
+      "kyusei_data": {
+        "一白水性": {
+          "board": 6,
+          "biorhythm": "盛衰合期",
+          "alerts": []
+        },
+        "二黒土性": {
+          "board": 7,
+          "biorhythm": "第2衰運期",
+          "alerts": []
+        },
+        "三碧木性": {
+          "board": 8,
+          "biorhythm": "第3衰運期",
+          "alerts": [
+            "歳破"
+          ]
+        },
+        "四緑木性": {
+          "board": 9,
+          "biorhythm": "第4衰運期",
+          "alerts": [
+            "暗剣"
+          ]
+        },
+        "五黄土性": {
+          "board": 1,
+          "biorhythm": "第5衰運期",
+          "alerts": [
+            "エコノミー"
+          ]
+        },
+        "六白金性": {
+          "board": 2,
+          "biorhythm": "第1盛運期",
+          "alerts": [
+            "剋"
+          ]
+        },
+        "七赤金性": {
+          "board": 3,
+          "biorhythm": "第2盛運期",
+          "alerts": [
+            "剋"
+          ]
+        },
+        "八白土性": {
+          "board": 4,
+          "biorhythm": "第3盛運期",
+          "alerts": []
+        },
+        "九紫火性": {
+          "board": 5,
+          "biorhythm": "第4盛運期",
+          "alerts": []
+        }
+      }
+    },
+    "2028": {
+      "year_info": {
+        "jikkan": "戊",
+        "junishi": "申",
+        "chuuguu": "八白土性"
+      },
+      "kyusei_data": {
+        "一白水性": {
+          "board": 7,
+          "biorhythm": "第2衰運期",
+          "alerts": [
+            "剋"
+          ]
+        },
+        "二黒土性": {
+          "board": 8,
+          "biorhythm": "第3衰運期",
+          "alerts": [
+            "歳破",
+            "暗剣"
+          ]
+        },
+        "三碧木性": {
+          "board": 9,
+          "biorhythm": "第4衰運期",
+          "alerts": []
+        },
+        "四緑木性": {
+          "board": 1,
+          "biorhythm": "第5衰運期",
+          "alerts": [
+            "エコノミー"
+          ]
+        },
+        "五黄土性": {
+          "board": 2,
+          "biorhythm": "第1盛運期",
+          "alerts": []
+        },
+        "六白金性": {
+          "board": 3,
+          "biorhythm": "第2盛運期",
+          "alerts": []
+        },
+        "七赤金性": {
+          "board": 4,
+          "biorhythm": "第3盛運期",
+          "alerts": []
+        },
+        "八白土性": {
+          "board": 5,
+          "biorhythm": "第4盛運期",
+          "alerts": []
+        },
+        "九紫火性": {
+          "board": 6,
+          "biorhythm": "盛衰合期",
+          "alerts": []
+        }
+      }
+    },
+    "2029": {
+      "year_info": {
+        "jikkan": "己",
+        "junishi": "酉",
+        "chuuguu": "七赤金性"
+      },
+      "kyusei_data": {
+        "一白水性": {
+          "board": 8,
+          "biorhythm": "第3衰運期",
+          "alerts": []
+        },
+        "二黒土性": {
+          "board": 9,
+          "biorhythm": "第4衰運期",
+          "alerts": []
+        },
+        "三碧木性": {
+          "board": 1,
+          "biorhythm": "第5衰運期",
+          "alerts": [
+            "剋",
+            "エコノミー"
+          ]
+        },
+        "四緑木性": {
+          "board": 2,
+          "biorhythm": "第1盛運期",
+          "alerts": [
+            "剋"
+          ]
+        },
+        "五黄土性": {
+          "board": 3,
+          "biorhythm": "第2盛運期",
+          "alerts": [
+            "歳破"
+          ]
+        },
+        "六白金性": {
+          "board": 4,
+          "biorhythm": "第3盛運期",
+          "alerts": []
+        },
+        "七赤金性": {
+          "board": 5,
+          "biorhythm": "第4盛運期",
+          "alerts": []
+        },
+        "八白土性": {
+          "board": 6,
+          "biorhythm": "盛衰合期",
+          "alerts": []
+        },
+        "九紫火性": {
+          "board": 7,
+          "biorhythm": "第2衰運期",
+          "alerts": [
+            "暗剣"
+          ]
+        }
+      }
+    },
+    "2030": {
+      "year_info": {
+        "jikkan": "庚",
+        "junishi": "戌",
+        "chuuguu": "六白金性"
+      },
+      "kyusei_data": {
+        "一白水性": {
+          "board": 9,
+          "biorhythm": "第4衰運期",
+          "alerts": []
+        },
+        "二黒土性": {
+          "board": 1,
+          "biorhythm": "第5衰運期",
+          "alerts": [
+            "エコノミー"
+          ]
+        },
+        "三碧木性": {
+          "board": 2,
+          "biorhythm": "第1盛運期",
+          "alerts": [
+            "剋"
+          ]
+        },
+        "四緑木性": {
+          "board": 3,
+          "biorhythm": "第2盛運期",
+          "alerts": [
+            "剋"
+          ]
+        },
+        "五黄土性": {
+          "board": 4,
+          "biorhythm": "第3盛運期",
+          "alerts": [
+            "歳破"
+          ]
+        },
+        "六白金性": {
+          "board": 5,
+          "biorhythm": "第4盛運期",
+          "alerts": []
+        },
+        "七赤金性": {
+          "board": 6,
+          "biorhythm": "盛衰合期",
+          "alerts": [
+            "暗剣"
+          ]
+        },
+        "八白土性": {
+          "board": 7,
+          "biorhythm": "第2衰運期",
+          "alerts": []
+        },
+        "九紫火性": {
+          "board": 8,
+          "biorhythm": "第3衰運期",
+          "alerts": []
+        }
+      }
+    },
+    "2031": {
+      "year_info": {
+        "jikkan": "辛",
+        "junishi": "亥",
+        "chuuguu": "五黄土性"
+      },
+      "kyusei_data": {
+        "一白水性": {
+          "board": 1,
+          "biorhythm": "第5衰運期",
+          "alerts": [
+            "剋",
+            "エコノミー"
+          ]
+        },
+        "二黒土性": {
+          "board": 2,
+          "biorhythm": "第1盛運期",
+          "alerts": []
+        },
+        "三碧木性": {
+          "board": 3,
+          "biorhythm": "第2盛運期",
+          "alerts": []
+        },
+        "四緑木性": {
+          "board": 4,
+          "biorhythm": "第3盛運期",
+          "alerts": [
+            "歳破"
+          ]
+        },
+        "五黄土性": {
+          "board": 5,
+          "biorhythm": "第4盛運期",
+          "alerts": []
+        },
+        "六白金性": {
+          "board": 6,
+          "biorhythm": "盛衰合期",
+          "alerts": []
+        },
+        "七赤金性": {
+          "board": 7,
+          "biorhythm": "第2衰運期",
+          "alerts": []
+        },
+        "八白土性": {
+          "board": 8,
+          "biorhythm": "第3衰運期",
+          "alerts": []
+        },
+        "九紫火性": {
+          "board": 9,
+          "biorhythm": "第4衰運期",
+          "alerts": []
+        }
+      }
+    },
+    "2032": {
+      "year_info": {
+        "jikkan": "壬",
+        "junishi": "子",
+        "chuuguu": "四緑木性"
+      },
+      "kyusei_data": {
+        "一白水性": {
+          "board": 2,
+          "biorhythm": "第1盛運期",
+          "alerts": []
+        },
+        "二黒土性": {
+          "board": 3,
+          "biorhythm": "第2盛運期",
+          "alerts": [
+            "剋"
+          ]
+        },
+        "三碧木性": {
+          "board": 4,
+          "biorhythm": "第3盛運期",
+          "alerts": [
+            "暗剣"
+          ]
+        },
+        "四緑木性": {
+          "board": 5,
+          "biorhythm": "第4盛運期",
+          "alerts": []
+        },
+        "五黄土性": {
+          "board": 6,
+          "biorhythm": "盛衰合期",
+          "alerts": [
+            "剋"
+          ]
+        },
+        "六白金性": {
+          "board": 7,
+          "biorhythm": "第2衰運期",
+          "alerts": []
+        },
+        "七赤金性": {
+          "board": 8,
+          "biorhythm": "第3衰運期",
+          "alerts": []
+        },
+        "八白土性": {
+          "board": 9,
+          "biorhythm": "第4衰運期",
+          "alerts": [
+            "歳破",
+            "剋"
+          ]
+        },
+        "九紫火性": {
+          "board": 1,
+          "biorhythm": "第5衰運期",
+          "alerts": [
+            "エコノミー"
+          ]
+        }
+      }
+    },
+    "2033": {
+      "year_info": {
+        "jikkan": "癸",
+        "junishi": "丑",
+        "chuuguu": "三碧木性"
+      },
+      "kyusei_data": {
+        "一白水性": {
+          "board": 3,
+          "biorhythm": "第2盛運期",
+          "alerts": [
+            "暗剣"
+          ]
+        },
+        "二黒土性": {
+          "board": 4,
+          "biorhythm": "第3盛運期",
+          "alerts": [
+            "剋"
+          ]
+        },
+        "三碧木性": {
+          "board": 5,
+          "biorhythm": "第4盛運期",
+          "alerts": []
+        },
+        "四緑木性": {
+          "board": 6,
+          "biorhythm": "盛衰合期",
+          "alerts": []
+        },
+        "五黄土性": {
+          "board": 7,
+          "biorhythm": "第2衰運期",
+          "alerts": [
+            "剋"
+          ]
+        },
+        "六白金性": {
+          "board": 8,
+          "biorhythm": "第3衰運期",
+          "alerts": []
+        },
+        "七赤金性": {
+          "board": 9,
+          "biorhythm": "第4衰運期",
+          "alerts": []
+        },
+        "八白土性": {
+          "board": 1,
+          "biorhythm": "第5衰運期",
+          "alerts": [
+            "剋",
+            "エコノミー"
+          ]
+        },
+        "九紫火性": {
+          "board": 2,
+          "biorhythm": "第1盛運期",
+          "alerts": [
+            "歳破"
+          ]
+        }
+      }
+    },
+    "2034": {
+      "year_info": {
+        "jikkan": "甲",
+        "junishi": "寅",
+        "chuuguu": "二黒土性"
+      },
+      "kyusei_data": {
+        "一白水性": {
+          "board": 4,
+          "biorhythm": "第3盛運期",
+          "alerts": [
+            "剋"
+          ]
+        },
+        "二黒土性": {
+          "board": 5,
+          "biorhythm": "第4盛運期",
+          "alerts": []
+        },
+        "三碧木性": {
+          "board": 6,
+          "biorhythm": "盛衰合期",
+          "alerts": []
+        },
+        "四緑木性": {
+          "board": 7,
+          "biorhythm": "第2衰運期",
+          "alerts": []
+        },
+        "五黄土性": {
+          "board": 8,
+          "biorhythm": "第3衰運期",
+          "alerts": []
+        },
+        "六白金性": {
+          "board": 9,
+          "biorhythm": "第4衰運期",
+          "alerts": []
+        },
+        "七赤金性": {
+          "board": 1,
+          "biorhythm": "第5衰運期",
+          "alerts": [
+            "エコノミー"
+          ]
+        },
+        "八白土性": {
+          "board": 2,
+          "biorhythm": "第1盛運期",
+          "alerts": [
+            "歳破",
+            "暗剣"
+          ]
+        },
+        "九紫火性": {
+          "board": 3,
+          "biorhythm": "第2盛運期",
+          "alerts": []
+        }
+      }
+    },
+    "2035": {
+      "year_info": {
+        "jikkan": "乙",
+        "junishi": "卯",
+        "chuuguu": "一白水性"
+      },
+      "kyusei_data": {
+        "一白水性": {
+          "board": 5,
+          "biorhythm": "第4盛運期",
+          "alerts": []
+        },
+        "二黒土性": {
+          "board": 6,
+          "biorhythm": "盛衰合期",
+          "alerts": []
+        },
+        "三碧木性": {
+          "board": 7,
+          "biorhythm": "第2衰運期",
+          "alerts": [
+            "歳破"
+          ]
+        },
+        "四緑木性": {
+          "board": 8,
+          "biorhythm": "第3衰運期",
+          "alerts": []
+        },
+        "五黄土性": {
+          "board": 9,
+          "biorhythm": "第4衰運期",
+          "alerts": []
+        },
+        "六白金性": {
+          "board": 1,
+          "biorhythm": "第5衰運期",
+          "alerts": [
+            "暗剣",
+            "エコノミー"
+          ]
+        },
+        "七赤金性": {
+          "board": 2,
+          "biorhythm": "第1盛運期",
+          "alerts": []
+        },
+        "八白土性": {
+          "board": 3,
+          "biorhythm": "第2盛運期",
+          "alerts": []
+        },
+        "九紫火性": {
+          "board": 4,
+          "biorhythm": "第3盛運期",
+          "alerts": [
+            "剋"
+          ]
+        }
+      }
+    },
+    "2036": {
+      "year_info": {
+        "jikkan": "丙",
+        "junishi": "辰",
+        "chuuguu": "九紫火性"
+      },
+      "kyusei_data": {
+        "一白水性": {
+          "board": 6,
+          "biorhythm": "盛衰合期",
+          "alerts": [
+            "歳破"
+          ]
+        },
+        "二黒土性": {
+          "board": 7,
+          "biorhythm": "第2衰運期",
+          "alerts": []
+        },
+        "三碧木性": {
+          "board": 8,
+          "biorhythm": "第3衰運期",
+          "alerts": []
+        },
+        "四緑木性": {
+          "board": 9,
+          "biorhythm": "第4衰運期",
+          "alerts": [
+            "暗剣"
+          ]
+        },
+        "五黄土性": {
+          "board": 1,
+          "biorhythm": "第5衰運期",
+          "alerts": [
+            "エコノミー"
+          ]
+        },
+        "六白金性": {
+          "board": 2,
+          "biorhythm": "第1盛運期",
+          "alerts": []
+        },
+        "七赤金性": {
+          "board": 3,
+          "biorhythm": "第2盛運期",
+          "alerts": []
+        },
+        "八白土性": {
+          "board": 4,
+          "biorhythm": "第3盛運期",
+          "alerts": []
+        },
+        "九紫火性": {
+          "board": 5,
+          "biorhythm": "第4盛運期",
+          "alerts": []
+        }
+      }
+    },
+    "2037": {
+      "year_info": {
+        "jikkan": "丁",
+        "junishi": "巳",
+        "chuuguu": "八白土性"
+      },
+      "kyusei_data": {
+        "一白水性": {
+          "board": 7,
+          "biorhythm": "第2衰運期",
+          "alerts": [
+            "剋"
+          ]
+        },
+        "二黒土性": {
+          "board": 8,
+          "biorhythm": "第3衰運期",
+          "alerts": [
+            "暗剣"
+          ]
+        },
+        "三碧木性": {
+          "board": 9,
+          "biorhythm": "第4衰運期",
+          "alerts": []
+        },
+        "四緑木性": {
+          "board": 1,
+          "biorhythm": "第5衰運期",
+          "alerts": [
+            "エコノミー"
+          ]
+        },
+        "五黄土性": {
+          "board": 2,
+          "biorhythm": "第1盛運期",
+          "alerts": []
+        },
+        "六白金性": {
+          "board": 3,
+          "biorhythm": "第2盛運期",
+          "alerts": []
+        },
+        "七赤金性": {
+          "board": 4,
+          "biorhythm": "第3盛運期",
+          "alerts": []
+        },
+        "八白土性": {
+          "board": 5,
+          "biorhythm": "第4盛運期",
+          "alerts": []
+        },
+        "九紫火性": {
+          "board": 6,
+          "biorhythm": "盛衰合期",
+          "alerts": [
+            "歳破"
+          ]
+        }
+      }
+    },
+    "2038": {
+      "year_info": {
+        "jikkan": "戊",
+        "junishi": "午",
+        "chuuguu": "七赤金性"
+      },
+      "kyusei_data": {
+        "一白水性": {
+          "board": 8,
+          "biorhythm": "第3衰運期",
+          "alerts": []
+        },
+        "二黒土性": {
+          "board": 9,
+          "biorhythm": "第4衰運期",
+          "alerts": []
+        },
+        "三碧木性": {
+          "board": 1,
+          "biorhythm": "第5衰運期",
+          "alerts": [
+            "剋",
+            "エコノミー",
+            "歳破"
+          ]
+        },
+        "四緑木性": {
+          "board": 2,
+          "biorhythm": "第1盛運期",
+          "alerts": [
+            "剋"
+          ]
+        },
+        "五黄土性": {
+          "board": 3,
+          "biorhythm": "第2盛運期",
+          "alerts": []
+        },
+        "六白金性": {
+          "board": 4,
+          "biorhythm": "第3盛運期",
+          "alerts": []
+        },
+        "七赤金性": {
+          "board": 5,
+          "biorhythm": "第4盛運期",
+          "alerts": []
+        },
+        "八白土性": {
+          "board": 6,
+          "biorhythm": "盛衰合期",
+          "alerts": []
+        },
+        "九紫火性": {
+          "board": 7,
+          "biorhythm": "第2衰運期",
+          "alerts": [
+            "暗剣"
+          ]
+        }
+      }
+    },
+    "2039": {
+      "year_info": {
+        "jikkan": "己",
+        "junishi": "未",
+        "chuuguu": "六白金性"
+      },
+      "kyusei_data": {
+        "一白水性": {
+          "board": 9,
+          "biorhythm": "第4衰運期",
+          "alerts": []
+        },
+        "二黒土性": {
+          "board": 1,
+          "biorhythm": "第5衰運期",
+          "alerts": [
+            "エコノミー"
+          ]
+        },
+        "三碧木性": {
+          "board": 2,
+          "biorhythm": "第1盛運期",
+          "alerts": [
+            "剋"
+          ]
+        },
+        "四緑木性": {
+          "board": 3,
+          "biorhythm": "第2盛運期",
+          "alerts": [
+            "剋"
+          ]
+        },
+        "五黄土性": {
+          "board": 4,
+          "biorhythm": "第3盛運期",
+          "alerts": []
+        },
+        "六白金性": {
+          "board": 5,
+          "biorhythm": "第4盛運期",
+          "alerts": []
+        },
+        "七赤金性": {
+          "board": 6,
+          "biorhythm": "盛衰合期",
+          "alerts": [
+            "暗剣"
+          ]
+        },
+        "八白土性": {
+          "board": 7,
+          "biorhythm": "第2衰運期",
+          "alerts": []
+        },
+        "九紫火性": {
+          "board": 8,
+          "biorhythm": "第3衰運期",
+          "alerts": [
+            "歳破"
+          ]
+        }
+      }
+    },
+    "2040": {
+      "year_info": {
+        "jikkan": "庚",
+        "junishi": "申",
+        "chuuguu": "五黄土性"
+      },
+      "kyusei_data": {
+        "一白水性": {
+          "board": 1,
+          "biorhythm": "第5衰運期",
+          "alerts": [
+            "剋",
+            "エコノミー"
+          ]
+        },
+        "二黒土性": {
+          "board": 2,
+          "biorhythm": "第1盛運期",
+          "alerts": []
+        },
+        "三碧木性": {
+          "board": 3,
+          "biorhythm": "第2盛運期",
+          "alerts": []
+        },
+        "四緑木性": {
+          "board": 4,
+          "biorhythm": "第3盛運期",
+          "alerts": []
+        },
+        "五黄土性": {
+          "board": 5,
+          "biorhythm": "第4盛運期",
+          "alerts": []
+        },
+        "六白金性": {
+          "board": 6,
+          "biorhythm": "盛衰合期",
+          "alerts": []
+        },
+        "七赤金性": {
+          "board": 7,
+          "biorhythm": "第2衰運期",
+          "alerts": []
+        },
+        "八白土性": {
+          "board": 8,
+          "biorhythm": "第3衰運期",
+          "alerts": [
+            "歳破"
+          ]
+        },
+        "九紫火性": {
+          "board": 9,
+          "biorhythm": "第4衰運期",
+          "alerts": []
+        }
+      }
+    }
+  },
+  "test_cases": [
+    {
+      "input": {
+        "kyusei": "三碧木性",
+        "year": 2026
+      },
+      "expected": {
+        "board": 7,
+        "biorhythm": "第2衰運期",
+        "alerts": []
+      },
+      "note": "時の啓示P.10で確認済み。九年に一度の決算期"
+    },
+    {
+      "input": {
+        "kyusei": "三碧木性",
+        "year": 2027
+      },
+      "expected": {
+        "board": 8,
+        "biorhythm": "第3衰運期",
+        "alerts": [
+          "歳破"
+        ]
+      },
+      "note": "第3衰運期＋歳破。独立や大きな変革は禁物の年"
+    },
+    {
+      "input": {
+        "kyusei": "六白金性",
+        "year": 2026
+      },
+      "expected": {
+        "board": 1,
+        "biorhythm": "第5衰運期",
+        "alerts": [
+          "歳破",
+          "エコノミー",
+          "暗剣"
+        ]
+      },
+      "note": "2026年で最も注意が必要な九性。歳破・エコノミー・暗剣の三重"
+    },
+    {
+      "input": {
+        "kyusei": "二黒土性",
+        "year": 2026
+      },
+      "expected": {
+        "board": 6,
+        "biorhythm": "盛衰合期",
+        "alerts": []
+      },
+      "note": "時の啓示P.8-9で確認済み。第5盛運期と第1衰運期が並行"
+    }
+  ]
+}
