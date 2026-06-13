@@ -426,6 +426,42 @@ body {
     <div id="rElementRelation"></div>
   </div>
 
+  <!-- 3つの鑑定視点 -->
+  <div class="result-card">
+    <h3>✨ あなたの3つの顔</h3>
+    <p style="color:var(--muted);font-size:.85rem;margin-bottom:20px;">九星気学が示す、あなたの本質的な魅力と可能性をお伝えします。</p>
+
+    <!-- ❶ 第一印象 -->
+    <div id="rFirstImpression" style="margin-bottom:24px;">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+        <span style="background:linear-gradient(135deg,#6ec6f0,#3a8fc7);color:#fff;border-radius:20px;padding:4px 14px;font-size:.8rem;font-weight:bold;">❶ 第一印象</span>
+        <span style="font-size:.82rem;color:var(--muted);">初めて会う人があなたに抱く印象</span>
+      </div>
+      <div id="rFirstImpressionSource" style="font-size:.8rem;color:var(--accent);margin-bottom:8px;"></div>
+      <div id="rFirstImpressionTraits"></div>
+    </div>
+
+    <!-- ❷ 行動特性 -->
+    <div id="rBehaviorTraits" style="margin-bottom:24px;">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+        <span style="background:linear-gradient(135deg,#a8e063,#56ab2f);color:#fff;border-radius:20px;padding:4px 14px;font-size:.8rem;font-weight:bold;">❷ 行動特性</span>
+        <span style="font-size:.82rem;color:var(--muted);">友人・同僚があなたに抱く印象／人格の核</span>
+      </div>
+      <div id="rBehaviorTraitsSource" style="font-size:.8rem;color:var(--accent);margin-bottom:8px;"></div>
+      <div id="rBehaviorTraitsItems"></div>
+    </div>
+
+    <!-- ❸ 運命を動かすポイント -->
+    <div id="rDestinyPoint">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+        <span style="background:linear-gradient(135deg,#f7971e,#ffd200);color:#333;border-radius:20px;padding:4px 14px;font-size:.8rem;font-weight:bold;">❸ 運命を動かすポイント</span>
+        <span style="font-size:.82rem;color:var(--muted);">家族・パートナーに見せる本来の気質</span>
+      </div>
+      <div id="rDestinyPointSource" style="font-size:.8rem;color:var(--accent);margin-bottom:8px;"></div>
+      <div id="rDestinyPointItems"></div>
+    </div>
+  </div>
+
   <!-- Advice -->
   <div class="result-card">
     <h3>2026年の鑑定アドバイス</h3>
@@ -1003,7 +1039,7 @@ async function doFortune() {
   }
 
   // === サーバーAPIで算出（早見表を直接参照・データは1箇所だけ） ===
-  const resp = await fetch('/api/calculate', {
+  const resp = await fetch('/gaia-fortune/api/calculate', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ year, month, day }),
@@ -1053,6 +1089,11 @@ async function doFortune() {
 
   // Render element relation
   renderElementRelation(myElement, yearElement, elRelation);
+
+  // Render 3 impression cards
+  if (d.firstImpression) renderImpressionCard('FirstImpression', d.firstImpression);
+  if (d.behaviorTraits)  renderImpressionCard('BehaviorTraits',  d.behaviorTraits);
+  if (d.destinyPoint)    renderImpressionCard('DestinyPoint',    d.destinyPoint);
 
   // Render advice
   renderAdvice(kyusei, d.bioPhase || bio.name);
@@ -1134,6 +1175,32 @@ function renderDirections(chart, branchIdx) {
   note.style.background = 'rgba(33,150,243,.1)';
   note.innerHTML = `<span class="icon" style="color:var(--water);">i</span><div><span style="font-size:.85rem;">暗剣殺・歳破は<strong>方位</strong>に対する警告です。特定の九性や十二支の人に直接影響するものではありません。</span></div>`;
   list.appendChild(note);
+}
+
+function renderImpressionCard(idKey, data) {
+  // idKey: 'FirstImpression' | 'BehaviorTraits' | 'DestinyPoint'
+  // data: { label, sourceChar, sourceLabel, kyuseiName, traits: [{name, desc}] }
+
+  // IDのマッピング
+  const sourceId = idKey === 'BehaviorTraits' ? 'rBehaviorTraitsSource'
+    : idKey === 'DestinyPoint'    ? 'rDestinyPointSource'
+    : 'rFirstImpressionSource';
+  const itemsId = idKey === 'BehaviorTraits' ? 'rBehaviorTraitsItems'
+    : idKey === 'DestinyPoint'    ? 'rDestinyPointItems'
+    : 'rFirstImpressionTraits';
+
+  const sourceEl = document.getElementById(sourceId);
+  const itemsEl  = document.getElementById(itemsId);
+  if (!sourceEl || !itemsEl) return;
+
+  sourceEl.textContent = `${data.sourceLabel}「${data.sourceChar}」→ ${data.kyuseiName}の特性より`;
+
+  itemsEl.innerHTML = data.traits.map(t => `
+    <div style="background:rgba(255,255,255,.05);border-radius:8px;padding:10px 14px;margin-bottom:8px;">
+      <span style="font-weight:bold;color:var(--accent);">「${t.name}」</span>
+      <span style="font-size:.88rem;color:var(--text-primary);margin-left:6px;">${t.desc}</span>
+    </div>
+  `).join('');
 }
 
 function renderElementRelation(myEl, yearEl, relation) {
@@ -1241,7 +1308,7 @@ async function sendChat() {
   scrollChat();
 
   try {
-    const res = await fetch('/api/chat', {
+    const res = await fetch('/gaia-fortune/api/chat', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -1396,6 +1463,17 @@ ul{padding-left:20px}
 <div class="section"><h2>2026年の方位情報</h2>
 <ul><li>五黄殺：${ctx.goouDir}</li><li>暗剣殺：${ctx.ankenDir}</li><li>歳破：${ctx.saihaDir}</li></ul></div>
 <div class="section"><h2>五行関係（あなた × 2026年）</h2>${cleanContent('rElementRelation')}</div>
+<div class="section"><h2>✨ あなたの3つの顔</h2>
+<h3 style="font-size:.95rem;color:#3a8fc7;margin:12px 0 6px;">❶ 第一印象（十二支から）</h3>
+${cleanContent('rFirstImpressionSource')}
+${cleanContent('rFirstImpressionTraits')}
+<h3 style="font-size:.95rem;color:#56ab2f;margin:16px 0 6px;">❷ 行動特性（十干から）</h3>
+${cleanContent('rBehaviorTraitsSource')}
+${cleanContent('rBehaviorTraitsItems')}
+<h3 style="font-size:.95rem;color:#f7971e;margin:16px 0 6px;">❸ 運命を動かすポイント（本命星から）</h3>
+${cleanContent('rDestinyPointSource')}
+${cleanContent('rDestinyPointItems')}
+</div>
 <div class="section"><h2>2026年の鑑定アドバイス</h2>${cleanContent('rAdvice')}</div>
 ${chatHtml}
 <div class="footer">時刻の啓示｜運命の羅針盤 — ガイアコード鑑定ツール</div>
