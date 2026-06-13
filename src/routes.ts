@@ -82,7 +82,7 @@ function getAnkenDirection(chart: number[]): string | null {
   return oppNum ? KYUSEI_DIRECTIONS[oppNum] || null : null;
 }
 
-router.post('/api/calculate', (req: Request, res: Response) => {
+router.post('/calculate', (req: Request, res: Response) => {
   try {
     const { year, month, day } = req.body;
     if (!year || !month || !day) {
@@ -175,7 +175,7 @@ router.post('/api/calculate', (req: Request, res: Response) => {
   }
 });
 
-router.post('/api/chat', async (req: Request, res: Response) => {
+router.post('/chat', async (req: Request, res: Response) => {
   try {
     const { message, fortuneContext, history, anthropicApiKey } = req.body;
 
