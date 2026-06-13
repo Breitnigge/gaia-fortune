@@ -82,7 +82,7 @@ function getAnkenDirection(chart: number[]): string | null {
   return oppNum ? KYUSEI_DIRECTIONS[oppNum] || null : null;
 }
 
-router.post('/calculate', (req: Request, res: Response) => {
+router.all('/calculate', (req: Request, res: Response) => {
   try {
     const { year, month, day } = req.body;
     if (!year || !month || !day) {
