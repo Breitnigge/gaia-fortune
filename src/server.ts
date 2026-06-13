@@ -16,6 +16,9 @@ app.get('/health', (_req: Request, res: Response) => {
 // API routes は静的ファイルより先に登録する
 app.use('/api', gaiaFortuneRouter);
 
+// 古いHTML側の呼び出しにも対応する
+app.use('/', gaiaFortuneRouter);
+
 // 静的ファイル
 app.use(express.static(path.join(__dirname, '..', 'public')));
 
