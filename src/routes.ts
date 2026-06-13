@@ -5,8 +5,28 @@ import {
   STEM_TO_KYUSEI, BRANCH_TO_KYUSEI,
   formatTraits, getBiorhythm, formatBiorhythmRange,
   SOUSHOU_DESC, SOUKOKU_DESC, BIORHYTHM_2026,
-  TOKUSEI_PRIORITY_BY_CATEGORY,
+  TOKUSEI_PRIORITY_BY_CATEGORY, TRAITS_20,
 } from './knowledge';
+
+// ============================================================
+// 3つの鑑定視点テキスト生成ヘルパー
+// ============================================================
+
+function getTopTraits(kyuseiNum: number, count: number = 3): { name: string; desc: string }[] {
+  const traits = TRAITS_20[kyuseiNum] || [];
+  return traits.slice(0, count);
+}
+
+function buildImpression(label: string, kyuseiNum: number, kyuseiName: string, sourceChar: string, sourceLabel: string): object {
+  const traits = getTopTraits(kyuseiNum, 3);
+  return {
+    label,
+    sourceChar,
+    sourceLabel,
+    kyuseiName,
+    traits: traits.map(t => ({ name: t.name, desc: t.desc })),
+  };
+}
 
 const router = Router();
 
@@ -30,7 +50,6 @@ const BRANCH_ELEMENTS: Record<string, string> = {
   '子': '水', '丑': '土', '寅': '木', '卯': '木', '辰': '土', '巳': '火',
   '午': '火', '未': '土', '申': '金', '酉': '金', '戌': '土', '亥': '水',
 };
-// 方位
 const KYUSEI_DIRECTIONS: Record<number, string> = {
   1: '北', 2: '南西', 3: '東', 4: '南東', 5: '中宮', 6: '北西', 7: '西', 8: '北東', 9: '南',
 };
@@ -39,8 +58,7 @@ const BRANCH_OPPOSITES: Record<string, string> = {
   '午': '北', '未': '北北東', '申': '東北東', '酉': '東', '戌': '東南東', '亥': '南南東',
 };
 
-// 飛泊順（後天定位盤）
-const FLY_ORDER = [5, 6, 7, 8, 9, 1, 2, 3, 4]; // 中宮→NW→W→NE→S→N→SW→E→SE
+const FLY_ORDER = [5, 6, 7, 8, 9, 1, 2, 3, 4];
 function generateStarChart(centerStar: number): number[] {
   const chart = new Array(9);
   for (let i = 0; i < 9; i++) {
@@ -52,24 +70,18 @@ function generateStarChart(centerStar: number): number[] {
 
 function getGoouDirection(chart: number[]): string | null {
   const pos = chart.indexOf(5);
-  if (pos < 0 || pos === 4) return null; // 中宮にいる場合は方位なし
+  if (pos < 0 || pos === 4) return null;
   return KYUSEI_DIRECTIONS[pos + 1] || null;
 }
 
 function getAnkenDirection(chart: number[]): string | null {
   const goouPos = chart.indexOf(5);
   if (goouPos < 0 || goouPos === 4) return null;
-  const oppositeIdx = (goouPos + 4) % 8; // 反対方位
-  // 方位は1-indexed、中宮(5)を除いた8方位の対角
   const DIR_OPPOSITES: Record<number, number> = { 1: 9, 2: 8, 3: 7, 4: 6, 6: 4, 7: 3, 8: 2, 9: 1 };
   const oppNum = DIR_OPPOSITES[goouPos + 1];
   return oppNum ? KYUSEI_DIRECTIONS[oppNum] || null : null;
 }
 
-/**
- * 生年月日→鑑定に必要な全データを返すAPI
- * フロントエンドはこのAPIの結果を表示するだけ（自分で計算しない）
- */
 router.post('/api/calculate', (req: Request, res: Response) => {
   try {
     const { year, month, day } = req.body;
@@ -88,20 +100,17 @@ router.post('/api/calculate', (req: Request, res: Response) => {
     const stemKyuseiNum = STEM_TO_KYUSEI[result.jikkan] || kyuseiNum;
     const branchKyuseiNum = BRANCH_TO_KYUSEI[result.junishi] || kyuseiNum;
 
-    // 2026年のデータ
-    const targetYear = 2026;
-    const targetKyusei = 1; // 2026年の中宮は一白水性
+    const targetKyusei = 1;
     const chart = generateStarChart(targetKyusei);
     const bio2026 = BIORHYTHM_2026[kyuseiNum];
 
     const goou = getGoouDirection(chart);
     const anken = getAnkenDirection(chart);
-    const saiha = BRANCH_OPPOSITES['午'] || '北'; // 2026年は午年
+    const saiha = BRANCH_OPPOSITES['午'] || '北';
 
     res.json({
       success: true,
       data: {
-        // 基本情報
         kyusei: result.honmeisei,
         kyuseiNum,
         stem: result.jikkan,
@@ -111,24 +120,19 @@ router.post('/api/calculate', (req: Request, res: Response) => {
         element: KYUSEI_ELEMENTS[kyuseiNum] || '',
         stemElement: STEM_ELEMENTS[result.jikkan] || '',
         branchElement: BRANCH_ELEMENTS[result.junishi] || '',
-        // 九性変換
         stemKyusei: KYUSEI_NAMES[stemKyuseiNum],
         stemKyuseiNum,
         branchKyusei: KYUSEI_NAMES[branchKyuseiNum],
         branchKyuseiNum,
-        // 2026年バイオリズム
         bioPhase: bio2026?.biorhythm || '',
         bioSeason: bio2026?.season || '',
         bioType: bio2026?.type || '',
         positionBoard: bio2026?.positionBoard || '',
         bioNote: bio2026?.note || '',
-        // 方位
         goouDir: goou || '該当なし（五黄が中宮）',
         ankenDir: anken || '該当なし（五黄が中宮）',
         saihaDir: saiha,
-        // 年盤
         chart,
-        // AI用fortuneContext（そのままchat APIに渡せる形）
         fortuneContext: {
           kyusei: result.honmeisei,
           kyuseiNum,
@@ -142,6 +146,27 @@ router.post('/api/calculate', (req: Request, res: Response) => {
           saihaDir: saiha,
           yearTheme: '上善如水（じょうぜんみずのごとし）— 艱難辛苦を玉と成す・誠実な生き方を実践する',
         },
+        firstImpression: buildImpression(
+          '第一印象',
+          branchKyuseiNum,
+          KYUSEI_NAMES[branchKyuseiNum] || '',
+          result.junishi,
+          '十二支',
+        ),
+        behaviorTraits: buildImpression(
+          '行動特性',
+          stemKyuseiNum,
+          KYUSEI_NAMES[stemKyuseiNum] || '',
+          result.jikkan,
+          '十干',
+        ),
+        destinyPoint: buildImpression(
+          '運命を動かすポイント',
+          kyuseiNum,
+          result.honmeisei,
+          result.honmeisei,
+          '本命星',
+        ),
       },
     });
   } catch (err: any) {
