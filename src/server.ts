@@ -13,7 +13,7 @@ app.use('/', gaiaFortuneRouter);
 
 // SPA fallback
 app.get('*', (_req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'public', 'index.html'));
+  res.sendFile(path.join(__dirname, '..', 'public', 'gaia-code-fortune-ss.html'));
 });
 
 app.listen(PORT, () => {
