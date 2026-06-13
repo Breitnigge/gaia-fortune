@@ -1039,7 +1039,7 @@ async function doFortune() {
   }
 
   // === サーバーAPIで算出（早見表を直接参照・データは1箇所だけ） ===
-  const resp = await fetch('/gaia-fortune/api/calculate', {
+  const resp = await fetch('/api/calculate', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ year, month, day }),
