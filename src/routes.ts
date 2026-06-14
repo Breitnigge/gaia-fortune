@@ -181,7 +181,8 @@ router.all('/calculate', (req: Request, res: Response) => {
           sourceChar: result.honmeisei,
           sourceLabel: '本命星',
           kyuseiName: result.honmeisei,
-          traits: getKeyTraits(kyuseiNum).map(t => ({ name: t.name, desc: t.desc })),
+          keyword: result.honmeisei,
+        traits: getKeyTraits(kyuseiNum).map(t => ({ name: t.name, desc: t.desc })),
         },
       },
     });
