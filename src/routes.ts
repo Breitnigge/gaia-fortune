@@ -23,11 +23,12 @@ function getKeyTraits(kyuseiNum: number): { name: string; desc: string }[] {
 function buildFirstImpression(branch: string) {
   const data = JUNISHI_DATA[branch];
   return {
-    label: SECTION_INTRO.firstImpression.title,
+    label: '❶ 第一印象',
     treeDescription: SECTION_INTRO.firstImpression.treeDescription,
     sourceChar: branch,
     sourceLabel: '十二支',
     kyuseiName: data?.keyword || '',
+        keyword: data?.keyword || '',
     traits: data
       ? [
           { name: '長所', desc: data.strengths.join('・') },
@@ -40,7 +41,7 @@ function buildFirstImpression(branch: string) {
 function buildBehaviorTraits(stem: string) {
   const data = JIKKAN_DATA[stem];
   return {
-    label: SECTION_INTRO.behaviorTrait.title,
+    label: '❷ 友人・同僚に見せる顔',
     treeDescription: SECTION_INTRO.behaviorTrait.treeDescription,
     sourceChar: stem,
     sourceLabel: '十干',
@@ -175,7 +176,7 @@ router.all('/calculate', (req: Request, res: Response) => {
         firstImpression: buildFirstImpression(result.junishi),
         behaviorTraits: buildBehaviorTraits(result.jikkan),
         destinyPoint: {
-          label: SECTION_INTRO.destinyPoint.title,
+          label: '❸ 家族・パートナーに見せる顔',
           treeDescription: SECTION_INTRO.destinyPoint.treeDescription,
           sourceChar: result.honmeisei,
           sourceLabel: '本命星',
