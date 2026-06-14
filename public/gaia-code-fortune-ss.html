@@ -1196,12 +1196,6 @@ function renderImpressionCard(idKey, data) {
   sourceEl.textContent = `${data.sourceLabel}「${data.sourceChar}」→ ${data.kyuseiName}の特性より`;
   if (data.keyword) itemsEl.innerHTML = '<div style="margin-bottom:8px;background:rgba(255,255,255,.05);border-radius:8px;padding:10px 14px"><span style="font-weight:bold;color:var(--accent)">「キーワード」</span><span style="font-size:.88rem;color:var(--text-primary);margin-left:6px">' + data.keyword + '</span></div>' + data.traits.map(t => `<div style="background:rgba(255,255,255,.05);border-radius:8px;padding:10px 14px;margin-bottom:8px;"><span style="font-weight:bold;color:var(--accent);">「${t.name}」</span><span style="font-size:.88rem;color:var(--text-primary);margin-left:6px;">${t.desc}</span></div>`).join('');
 
-  itemsEl.innerHTML = data.traits.map(t => `
-    <div style="background:rgba(255,255,255,.05);border-radius:8px;padding:10px 14px;margin-bottom:8px;">
-      <span style="font-weight:bold;color:var(--accent);">「${t.name}」</span>
-      <span style="font-size:.88rem;color:var(--text-primary);margin-left:6px;">${t.desc}</span>
-    </div>
-  `).join('');
 }
 
 function renderElementRelation(myEl, yearEl, relation) {
