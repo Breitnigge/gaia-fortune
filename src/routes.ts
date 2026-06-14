@@ -17,6 +17,14 @@ function getTopTraits(kyuseiNum: number, count: number = 3): { name: string; des
   return traits.slice(0, count);
 }
 
+// 本命星の重要特性：コードブックで四角に囲まれた 1,6,11,16番目（0始まりで 0,5,10,15）
+const KEY_TRAIT_INDICES = [0, 5, 10, 15];
+
+function getKeyTraits(kyuseiNum: number): { name: string; desc: string }[] {
+  const traits = TRAITS_20[kyuseiNum] || [];
+  return KEY_TRAIT_INDICES.map(i => traits[i]).filter(Boolean);
+}
+
 function buildImpression(label: string, kyuseiNum: number, kyuseiName: string, sourceChar: string, sourceLabel: string): object {
   const traits = getTopTraits(kyuseiNum, 3);
   return {
@@ -160,13 +168,13 @@ router.all('/calculate', (req: Request, res: Response) => {
           result.jikkan,
           '十干',
         ),
-        destinyPoint: buildImpression(
-          '運命を動かすポイント',
-          kyuseiNum,
-          result.honmeisei,
-          result.honmeisei,
-          '本命星',
-        ),
+        destinyPoint: {
+          label: '運命を動かすポイント',
+          sourceChar: result.honmeisei,
+          sourceLabel: '本命星',
+          kyuseiName: result.honmeisei,
+          traits: getKeyTraits(kyuseiNum).map(t => ({ name: t.name, desc: t.desc })),
+        },
       },
     });
   } catch (err: any) {
