@@ -10,6 +10,16 @@ import biorhythmFullData from './biorhythm-full.json';
 import hayamiTableData from './hayami-table.json';
 
 // ============================================================
+// 十干・十二支データ ← jikkan_junishi_data.ts から読み込み
+// ============================================================
+
+export {
+  JIKKAN_DATA,
+  JUNISHI_DATA,
+  SECTION_INTRO,
+} from './jikkan_junishi_data';
+
+// ============================================================
 // 九性の基本定義（これは固定値なので直書きでOK）
 // ============================================================
 

@@ -3,19 +3,14 @@ import { GaiaFortuneService } from './service';
 import {
   calcFromBirthday, KYUSEI_NAMES, KYUSEI_NAME_TO_NUM,
   STEM_TO_KYUSEI, BRANCH_TO_KYUSEI,
-  formatTraits, getBiorhythm, formatBiorhythmRange,
-  SOUSHOU_DESC, SOUKOKU_DESC, BIORHYTHM_2026,
-  TOKUSEI_PRIORITY_BY_CATEGORY, TRAITS_20,
+  BIORHYTHM_2026,
+  TRAITS_20,
+  JIKKAN_DATA, JUNISHI_DATA, SECTION_INTRO,
 } from './knowledge';
 
 // ============================================================
 // 3つの鑑定視点テキスト生成ヘルパー
 // ============================================================
-
-function getTopTraits(kyuseiNum: number, count: number = 3): { name: string; desc: string }[] {
-  const traits = TRAITS_20[kyuseiNum] || [];
-  return traits.slice(0, count);
-}
 
 // 本命星の重要特性：コードブックで四角に囲まれた 1,6,11,16番目（0始まりで 0,5,10,15）
 const KEY_TRAIT_INDICES = [0, 5, 10, 15];
@@ -25,14 +20,37 @@ function getKeyTraits(kyuseiNum: number): { name: string; desc: string }[] {
   return KEY_TRAIT_INDICES.map(i => traits[i]).filter(Boolean);
 }
 
-function buildImpression(label: string, kyuseiNum: number, kyuseiName: string, sourceChar: string, sourceLabel: string): object {
-  const traits = getTopTraits(kyuseiNum, 3);
+function buildFirstImpression(branch: string) {
+  const data = JUNISHI_DATA[branch];
   return {
-    label,
-    sourceChar,
-    sourceLabel,
-    kyuseiName,
-    traits: traits.map(t => ({ name: t.name, desc: t.desc })),
+    label: SECTION_INTRO.firstImpression.title,
+    treeDescription: SECTION_INTRO.firstImpression.treeDescription,
+    sourceChar: branch,
+    sourceLabel: '十二支',
+    kyuseiName: data?.keyword || '',
+    traits: data
+      ? [
+          { name: '長所', desc: data.strengths.join('・') },
+          { name: '端的に表すと', desc: data.essence },
+        ]
+      : [],
+  };
+}
+
+function buildBehaviorTraits(stem: string) {
+  const data = JIKKAN_DATA[stem];
+  return {
+    label: SECTION_INTRO.behaviorTrait.title,
+    treeDescription: SECTION_INTRO.behaviorTrait.treeDescription,
+    sourceChar: stem,
+    sourceLabel: '十干',
+    kyuseiName: data?.keyword || '',
+    traits: data
+      ? [
+          { name: '長所', desc: data.strengths.join('・') },
+          { name: '気質', desc: data.feature },
+        ]
+      : [],
   };
 }
 
@@ -154,22 +172,11 @@ router.all('/calculate', (req: Request, res: Response) => {
           saihaDir: saiha,
           yearTheme: '上善如水（じょうぜんみずのごとし）— 艱難辛苦を玉と成す・誠実な生き方を実践する',
         },
-        firstImpression: buildImpression(
-          '第一印象',
-          branchKyuseiNum,
-          KYUSEI_NAMES[branchKyuseiNum] || '',
-          result.junishi,
-          '十二支',
-        ),
-        behaviorTraits: buildImpression(
-          '行動特性',
-          stemKyuseiNum,
-          KYUSEI_NAMES[stemKyuseiNum] || '',
-          result.jikkan,
-          '十干',
-        ),
+        firstImpression: buildFirstImpression(result.junishi),
+        behaviorTraits: buildBehaviorTraits(result.jikkan),
         destinyPoint: {
-          label: '運命を動かすポイント',
+          label: SECTION_INTRO.destinyPoint.title,
+          treeDescription: SECTION_INTRO.destinyPoint.treeDescription,
           sourceChar: result.honmeisei,
           sourceLabel: '本命星',
           kyuseiName: result.honmeisei,
